@@ -41,14 +41,12 @@ function banglaToJS(code) {
     .replace(/স্ট্রাক্ট/g, 'let')
     .replace(/নতুন/g, 'new')
 
-    // ফাইল (সিমুলেটেড)
-    .replace(/সংরক্ষণ/g, 'localStorage.setItem')
+    // ফাইল 
+    .replace(/লিখো/g, 'localStorage.setItem')
     .replace(/পড়ো/g, 'localStorage.getItem')
-    .replace(/মুছে_ফেলো/g, 'localStorage.removeItem')
+    .replace(/মুছো/g, 'localStorage.removeItem')
 
-    // পয়েন্টার (সিমুলেশন)
-    .replace(/প্রসারণ/g, 'spread') // simulated keyword
-
+    
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
 }
