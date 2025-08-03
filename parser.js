@@ -30,7 +30,7 @@ function banglaToJS(code) {
     .replace(/ছাঁটাই/g, 'trim')
     .replace(/বড়হাতের/g, 'toUpperCase')
     .replace(/ছোটহাতের/g, 'toLowerCase')
-    .replace(/জোড়েদাও/g, 'concat')
+    .replace(/জোড়া/g, 'concat')
 
     // অ্যারে
     .replace(/রাখো/g, 'push')
