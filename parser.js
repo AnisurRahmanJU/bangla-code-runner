@@ -2,18 +2,29 @@ function banglaToJS(code) {
   return code
     // চলক ও ধ্রুবক
     .replace(/ধরি/g, 'var')
+    .replace(/চলক/g, 'let')
     .replace(/ধ্রুবক/g, 'const')
+
 
     // শর্ত ও লজিক
     .replace(/যদি/g, 'if')
+    .replace(/নাহলে যদি/g, 'else if')
     .replace(/নাহলে/g, 'else')
     .replace(/সত্য/g, 'true')
     .replace(/মিথ্যা/g, 'false')
+    .replace(/এবং/g, '&&')
+    .replace(/অথবা/g, '||')
+    .replace(/না/g, '!')
+
 
     // লুপ
     .replace(/লুপ/g, 'for')
+    .replace(/লুপ/g, 'for')
     .replace(/যতক্ষণ/g, 'while')
     .replace(/করো/g, 'do')
+    .replace(/থামো/g, 'break')
+    .replace(/বাদ/g, 'continue')
+
 
     // ফাংশন
     .replace(/ফাংশন/g, 'function')
@@ -32,7 +43,6 @@ function banglaToJS(code) {
     .replace(/ছোটহাতের/g, 'toLowerCase')
     .replace(/জোড়া/g, 'concat')
 
-    // অ্যারে
     .replace(/রাখো/g, 'push')
     .replace(/সরাও/g, 'pop')
     .replace(/সাজাও/g, 'sort')
