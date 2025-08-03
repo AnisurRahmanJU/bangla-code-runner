@@ -1,64 +1,117 @@
+/* Base page styling */
 body {
   font-family: 'Noto Sans Bengali', sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  background-color: #0d1b2a; /* Dark navy blue */
+  color: #e0e1dd;
   padding: 20px;
 }
 
+/* Container styling */
 .container {
-  max-width: 100%;
-  padding: 15px;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #1b263b; /* Darker container box */
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
 }
 
+/* Heading */
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   text-align: center;
+  color: #e0e1dd;
+  margin-bottom: 1.5rem;
 }
 
-textarea {
+/* Bengali code textarea */
+textarea#banglaCode {
   font-family: 'Noto Sans Bengali', sans-serif;
   font-size: 1rem;
   direction: ltr;
-  background-color: #1e1e1e;
-  color: #ffffff;
-  border: 1px solid #444;
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 10px;
   width: 100%;
   resize: vertical;
+  transition: border-color 0.2s ease-in-out;
 }
 
+textarea#banglaCode:focus {
+  outline: none;
+  border-color: #0ea5e9;
+}
+
+/* Output box */
 #output {
   white-space: pre-wrap;
   font-family: monospace;
-  background: #1e1e1e;
-  color: #ffffff;
-  border-radius: 5px;
-  padding: 10px;
-  min-height: 50px;
-  border: 1px solid #444;
+  background: #1e293b;
+  color: #f1f5f9;
+  border-radius: 6px;
+  padding: 12px;
+  min-height: 60px;
+  border: 1px solid #334155;
   overflow-x: auto;
+  transition: border-color 0.2s ease-in-out;
 }
 
+/* Button container layout */
 .d-flex {
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
+/* Buttons */
 .btn {
   flex: 1 1 auto;
-  min-width: 100px;
+  min-width: 120px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  padding: 10px 16px;
 }
 
+.btn-success {
+  background-color: #0ea5e9;
+  border-color: #0ea5e9;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #0284c7;
+  border-color: #0284c7;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Responsive layout for smaller screens */
 @media screen and (max-width: 576px) {
-  textarea {
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  textarea#banglaCode {
     font-size: 0.95rem;
   }
 
-  h2 {
-    font-size: 1.25rem;
+  .btn {
+    font-size: 0.95rem;
+    min-width: 100%;
   }
 
-  .btn {
-    font-size: 0.9rem;
-    padding: 10px;
+  .d-flex {
+    flex-direction: column;
   }
 }
