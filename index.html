@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <title>বাংলা কোড রানার</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-dark text-white">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">বাংলা কোড রানার</h2>
+
+    <textarea
+      id="banglaCode"
+      class="form-control mb-3 bg-dark text-white border-secondary"
+      rows="10"
+      placeholder="বাংলায় কোড লিখুন..."
+    >
+যদি (৫ > ৩) {
+দেখাও("৫ বড়");
+} নয় {
+দেখাও("৩ বড়");
+}</textarea>
+
+    <div class="d-flex gap-2 mb-3">
+      <button onclick="runBanglaCode()" class="btn btn-success">Run</button>
+      <button onclick="clearCode()" class="btn btn-danger">কোড মুছুন</button>
+      <button onclick="clearOutput()" class="btn btn-danger">আউটপুট মুছুন</button>
+    </div>
+
+    <pre id="output" class="p-3 border bg-dark text-white rounded"></pre>
+  </div>
+
+  <script src="parser.js"></script>
+  <script>
+    function clearCode() {
+      document.getElementById('banglaCode').value = '';
+    }
+    function clearOutput() {
+      document.getElementById('output').textContent = '';
+    }
+  </script>
+</body>
+</html>
