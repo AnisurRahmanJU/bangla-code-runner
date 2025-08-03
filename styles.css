@@ -52,7 +52,7 @@ textarea#banglaCode:focus {
   color: #f1f5f9;
   border-radius: 6px;
   padding: 12px;
-  min-height: 150px;
+  min-height: 120px;
   border: 1px solid #334155;
   overflow-x: auto;
   transition: border-color 0.2s ease-in-out;
