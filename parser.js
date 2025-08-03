@@ -1,7 +1,7 @@
 function banglaToJS(code) {
   return code
     // চলক ও ধ্রুবক
-    .replace(/চলক/g, 'let')
+    .replace(/ধরি/g, 'var')
     .replace(/ধ্রুবক/g, 'const')
 
     // শর্ত ও লজিক
@@ -38,7 +38,7 @@ function banglaToJS(code) {
     .replace(/সাজাও/g, 'sort')
 
     // অবজেক্ট/স্ট্রাকচার
-    .replace(/স্ট্রাকচার/g, 'let')
+    .replace(/স্ট্রাক্ট/g, 'let')
     .replace(/নতুন/g, 'new')
 
     // ফাইল (সিমুলেটেড)
