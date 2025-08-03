@@ -56,6 +56,30 @@ function banglaToJS(code) {
     .replace(/পড়ো/g, 'localStorage.getItem')
     .replace(/মুছো/g, 'localStorage.removeItem')
 
+    // গানিতিক
+    .replace(/গণিত/g, 'Math')   
+    .replace(/পাই/g, 'PI')                 // π (pi)
+    .replace(/ইউলার/g, 'E')                    // Euler’s number (e)
+    .replace(/সাইন/g, 'sin')               // sine
+    .replace(/কসাইন/g, 'cos')              // cosine
+    .replace(/ট্যান/g, 'tan')               // tangen
+    .replace(/আর্কসাইন/g, 'asin')          // arcsine
+    .replace(/আর্ককোসাইন/g, 'acos')         // arccosine
+    .replace(/আর্কট্যান/g, 'atan') 
+    .replace(/গুননিয়ক/g, 'gcd')
+    .replace(/গুনিতক/g, 'lcm')
+    .replace(/লগ/g, 'log')                 // natural logarithm (ln)
+    .replace(/লগ১০/g, 'log10')             // log base 10
+    .replace(/বর্গমূল/g, 'sqrt')            // square root
+    .replace(/ঘাত/g, 'pow')                // power
+    .replace(/নিচ/g, 'floor')         // floor (round down)
+    .replace(/উপর/g, 'ceil')        // ceil (round up)
+    .replace(/রাউন্ড/g, 'round')           // round (nearest integer)
+    .replace(/পরম_মান/g, 'abs')            // absolute value
+    .replace(/ন্যূনতম/g, 'min')            // minimum
+    .replace(/সর্বাধিক/g, 'max')            // maximum
+    .replace(/র‌্যান্ডম/g, 'random')         // random decimal between 0 and 1
+
     
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
