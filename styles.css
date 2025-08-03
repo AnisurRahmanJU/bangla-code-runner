@@ -5,13 +5,25 @@ body {
   padding: 20px;
 }
 
+.container {
+  max-width: 100%;
+  padding: 15px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 textarea {
   font-family: 'Noto Sans Bengali', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   direction: ltr;
   background-color: #1e1e1e;
   color: #ffffff;
   border: 1px solid #444;
+  width: 100%;
+  resize: vertical;
 }
 
 #output {
@@ -23,4 +35,30 @@ textarea {
   padding: 10px;
   min-height: 50px;
   border: 1px solid #444;
+  overflow-x: auto;
+}
+
+.d-flex {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1 1 auto;
+  min-width: 100px;
+}
+
+@media screen and (max-width: 576px) {
+  textarea {
+    font-size: 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
 }
