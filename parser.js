@@ -14,7 +14,7 @@ function banglaToJS(code) {
     .replace(/মিথ্যা/g, 'false')
     .replace(/এবং/g, '&&')
     .replace(/অথবা/g, '||')
-    .replace(/না/g, '!')
+    // .replace(/না/g, '!')
 
 
     // লুপ
