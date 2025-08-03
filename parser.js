@@ -26,19 +26,14 @@ function banglaToJS(code) {
 
     // গাণিতিক অপারেশন
     .replace(/গণনা/g, 'Math')
-    .replace(/গুন/g, '*')
-    .replace(/ভাগ/g, '/')
-    .replace(/যোগ/g, '+')
-    .replace(/বিয়োগ/g, '-')
-    .replace(/ঘাত/g, '**')
     .replace(/বর্গমূল/g, 'Math.sqrt')
 
     // স্ট্রিং ফাংশন
     .replace(/দৈর্ঘ্য/g, 'length')
     .replace(/ছাঁটাই/g, 'trim')
-    .replace(/বড়হাতরূপ/g, 'toUpperCase')
-    .replace(/ছোটহাতরূপ/g, 'toLowerCase')
-    .replace(/জোড়া/g, 'concat')
+    .replace(/বড়হাতের/g, 'toUpperCase')
+    .replace(/ছোটহাতের/g, 'toLowerCase')
+    .replace(/জোড়েদাও/g, 'concat')
 
     // অ্যারে
     .replace(/অ্যারে/g, 'Array')
