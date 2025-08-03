@@ -6,12 +6,12 @@ function banglaToJS(code) {
 
     // শর্ত ও লজিক
     .replace(/যদি/g, 'if')
-    .replace(/নয়/g, 'else')
+    .replace(/নাহলে/g, 'else')
     .replace(/সত্য/g, 'true')
     .replace(/মিথ্যা/g, 'false')
 
     // লুপ
-    .replace(/জন্য/g, 'for')
+    .replace(/লুপ/g, 'for')
     .replace(/যতক্ষণ/g, 'while')
     .replace(/করো/g, 'do')
 
@@ -24,9 +24,6 @@ function banglaToJS(code) {
     .replace(/ইনপুট/g, 'prompt')
     .replace(/আউটপুট/g, 'alertAndOutput')
 
-    // গাণিতিক অপারেশন
-    .replace(/গণনা/g, 'Math')
-    .replace(/বর্গমূল/g, 'Math.sqrt')
 
     // স্ট্রিং ফাংশন
     .replace(/দৈর্ঘ্য/g, 'length')
@@ -36,7 +33,6 @@ function banglaToJS(code) {
     .replace(/জোড়েদাও/g, 'concat')
 
     // অ্যারে
-    .replace(/অ্যারে/g, 'Array')
     .replace(/রাখো/g, 'push')
     .replace(/সরাও/g, 'pop')
     .replace(/সাজাও/g, 'sort')
