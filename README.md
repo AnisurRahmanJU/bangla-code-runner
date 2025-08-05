@@ -7,15 +7,19 @@
 [**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
 ```py
+// Input/Output
 ধরি নাম = ইনপুট("তোমার নাম কি?")
 দেখাও("তোমাকে স্বাগতম " + নাম);
 ```
 
 > ডকুমেন্টেশন -
-[**``` Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/docs)
+[**```Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/docs)
 
 ```py
+// Input
 ধরি নাম = ইনপুট("তোমার নাম কি?")
+
+// Condition
 যদি (নাম == "আনিছুর") {
 দেখাও("হ্যালো আনিছুর");
 } নাহলে যদি (নাম == "লিখন") {
