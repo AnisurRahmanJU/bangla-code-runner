@@ -7,10 +7,10 @@
 [**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
 > ডকুমেন্টেশন -
-[**``` Docs```**](https://anisurrahmanju.github.io/bangla-code-runner/)
+[**``` Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/docs)
 
 > বাংলা কোড উদাহরণ -
-[**``` Docs```**](https://anisurrahmanju.github.io/bangla-code-runner/)
+[**``` Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
 
 # ইনস্টলেশন
 
