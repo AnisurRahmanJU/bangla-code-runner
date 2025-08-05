@@ -9,8 +9,20 @@
 > ডকুমেন্টেশন -
 [**``` Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/docs)
 
+```py
+ধরি নাম = ইনপুট("তোমার নাম কি?")
+যদি (নাম == "আনিছুর") {
+দেখাও("হ্যালো আনিছুর");
+} নাহলে যদি (নাম == "লিখন") {
+দেখাও("হ্যালো লিখন");
+} নাহলে {
+দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
+}
+```
+
 > বাংলা কোড উদাহরণ -
-[**``` Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
+[**```Examples```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
+---
 
 # ইনস্টলেশন
 
