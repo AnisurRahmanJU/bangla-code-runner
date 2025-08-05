@@ -3,9 +3,14 @@
 
 বাংলা কোড রানার একটি অনলাইন প্ল্যাটফর্ম যা ব্যবহারকারীদের বাংলা কোড রান এবং টেস্ট করার সুযোগ দেয়। এটি ছোটদের জন্য একটি সহজ এবং কার্যকরী টুল, যা বাংলা কোড লেখা, রান করা এবং ডিবাগ করা আরও সহজ করে তোলে।
 
-### লাইভ
+> লাইভ -
+[**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
-> [**Try it out**](https://anisurrahmanju.github.io/bangla-code-runner/)
+> ডকুমেন্টেশন -
+[**``` Docs```**](https://anisurrahmanju.github.io/bangla-code-runner/)
+
+> বাংলা কোড উদাহরণ -
+[**``` Docs```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
 # ইনস্টলেশন
 
