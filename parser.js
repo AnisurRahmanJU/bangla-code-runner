@@ -19,7 +19,6 @@ function banglaToJS(code) {
 
     // লুপ
     .replace(/লুপ/g, 'for')
-    .replace(/লুপ/g, 'for')
     .replace(/যতক্ষণ/g, 'while')
     .replace(/করো/g, 'do')
     .replace(/থামো/g, 'break')
@@ -39,8 +38,8 @@ function banglaToJS(code) {
     // স্ট্রিং ফাংশন
     .replace(/দৈর্ঘ্য/g, 'length')
     .replace(/ছাঁটাই/g, 'trim')
-    .replace(/বড়হাতের/g, 'toUpperCase')
-    .replace(/ছোটহাতের/g, 'toLowerCase')
+    //.replace(/বড়হাতের/g, 'toUpperCase')
+    //.replace(/ছোটহাতের/g, 'toLowerCase')
     .replace(/জোড়া/g, 'concat')
 
     .replace(/রাখো/g, 'push')
