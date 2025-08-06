@@ -5,7 +5,6 @@ function banglaToJS(code) {
     .replace(/চলক/g, 'let')
     .replace(/ধ্রুবক/g, 'const')
 
-
     // শর্ত ও লজিক
     .replace(/যদি/g, 'if')
     .replace(/নাহলে যদি/g, 'else if')
@@ -16,14 +15,12 @@ function banglaToJS(code) {
     .replace(/অথবা/g, '||')
     // .replace(/না/g, '!')
 
-
     // লুপ
     .replace(/লুপ/g, 'for')
     .replace(/যতক্ষণ/g, 'while')
     .replace(/করো/g, 'do')
     .replace(/থামো/g, 'break')
     .replace(/বাদ/g, 'continue')
-
 
     // ফাংশন
     .replace(/ফাংশন/g, 'function')
@@ -33,7 +30,6 @@ function banglaToJS(code) {
     .replace(/দেখাও/g, 'console.log')
     .replace(/ইনপুট/g, 'prompt')
     .replace(/আউটপুট/g, 'alertAndOutput')
-
 
     // স্ট্রিং ফাংশন
     .replace(/দৈর্ঘ্য/g, 'length')
@@ -61,7 +57,7 @@ function banglaToJS(code) {
     .replace(/ইউলার/g, 'E')                    // Euler’s number (e)
     .replace(/সাইন/g, 'sin')               // sine
     .replace(/কসাইন/g, 'cos')              // cosine
-    .replace(/ট্যান/g, 'tan')               // tangen
+    .replace(/ট্যান/g, 'tan')               // tangent
     .replace(/আর্কসাইন/g, 'asin')          // arcsine
     .replace(/আর্ককোসাইন/g, 'acos')         // arccosine
     .replace(/আর্কট্যান/g, 'atan') 
@@ -79,16 +75,21 @@ function banglaToJS(code) {
     .replace(/সর্বাধিক/g, 'max')            // maximum
     .replace(/র‌্যান্ডম/g, 'random')         // random decimal between 0 and 1
 
-    
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
 }
 
-//  এই ফাংশন আউটপুট div এবং alert দুই জায়গাতেই দেখাবে
+// English to Bangla number converter
+function convertNumbersToBangla(text) {
+  return text.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+}
+
+// আউটপুট div এবং alert দুই জায়গাতেই দেখাবে এবং সংখ্যা বাংলা করবে
 function alertAndOutput(message) {
-  alert(message);
+  const converted = convertNumbersToBangla(message);
+  alert(converted);
   const outputDiv = document.getElementById('output');
-  outputDiv.textContent += message + '\n';
+  outputDiv.textContent += converted + '\n';
 }
 
 function runBanglaCode() {
@@ -101,7 +102,8 @@ function runBanglaCode() {
   // Override console.log
   const originalConsoleLog = console.log;
   console.log = function (...args) {
-    outputDiv.textContent += args.join(' ') + '\n';
+    const converted = args.map(arg => convertNumbersToBangla(arg)).join(' ');
+    outputDiv.textContent += converted + '\n';
     originalConsoleLog.apply(console, args);
   };
 
