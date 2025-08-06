@@ -84,7 +84,7 @@ function banglaToJS(code) {
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
 }
 
-// ✅ এই ফাংশন আউটপুট div এবং alert দুই জায়গাতেই দেখাবে
+//  এই ফাংশন আউটপুট div এবং alert দুই জায়গাতেই দেখাবে
 function alertAndOutput(message) {
   alert(message);
   const outputDiv = document.getElementById('output');
