@@ -1,0 +1,31 @@
+{
+  "name": "@anisurrahmanju/bangla-code-runner",
+  "version": "1.0.0",
+  "description": "A Bangla programming language code runner with syntax highlighting, real output, and step-by-step execution.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anisurrahmanju/bangla-code-runner.git"
+  },
+  "keywords": [
+    "bangla",
+    "code-runner",
+    "programming-language",
+    "syntax-highlighting",
+    "c-language",
+    "javascript"
+  ],
+  "author": "Md. Anisur Rahman <poetanis@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/anisurrahmanju/bangla-code-runner/issues"
+  },
+  "homepage": "https://anisurrahmanju.github.io/bangla-code-runner/"
+}
