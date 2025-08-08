@@ -48,6 +48,7 @@ function banglaToJS(code) {
     .replace(/লিখো/g, 'localStorage.setItem')
     .replace(/পড়ো/g, 'localStorage.getItem')
     .replace(/মুছো/g, 'localStorage.removeItem')
+    .replace(/সব_মুছো/g, 'localStorage.clear')
 
     // গানিতিক
     .replace(/গণিত/g, 'Math')   
