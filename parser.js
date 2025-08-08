@@ -84,6 +84,19 @@ function convertNumbersToBangla(text) {
   return text.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 }
 
+function convertBoolToBangla(text) {
+  if (text === true) return 'সত্য';
+  if (text === false) return 'মিথ্যা';
+  return text;
+}
+
+function convertNumbersToBangla(text) {
+  text = convertBoolToBangla(text);
+  text = text.toString();
+  return text.replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+}
+
+
 // আউটপুট div এবং alert দুই জায়গাতেই দেখাবে এবং সংখ্যা বাংলা করবে
 function alertAndOutput(message) {
   const converted = convertNumbersToBangla(message);
