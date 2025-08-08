@@ -90,6 +90,13 @@ function convertNumbersToBangla(text) {
   text = text.toString();
   return text.replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 }
+// আউটপুট div এবং alert দুই জায়গাতেই দেখাবে এবং সংখ্যা বাংলা করবে
+function alertAndOutput(message) {
+  const converted = convertNumbersToBangla(message);
+  alert(converted);
+  const outputDiv = document.getElementById('output');
+  outputDiv.textContent += converted + '\n';
+}
 
 // আউটপুট দেখানোর ফাংশন
 function alertAndOutput(message) {
@@ -98,6 +105,7 @@ function alertAndOutput(message) {
   const outputDiv = document.getElementById('output');
   outputDiv.textContent += converted + '\n';
 }
+
 
 // কথা_বলো ফাংশন
 function কথা_বলো(str) {
