@@ -13,7 +13,6 @@ function banglaToJS(code) {
     .replace(/মিথ্যা/g, 'false')
     .replace(/এবং/g, '&&')
     .replace(/অথবা/g, '||')
-    // .replace(/না/g, '!')
 
     // লুপ
     .replace(/লুপ/g, 'for')
@@ -27,6 +26,7 @@ function banglaToJS(code) {
     .replace(/ফেরত/g, 'return')
 
     // ইনপুট ও আউটপুট
+    .replace(/কথা_বলো/g, 'কথা_বলো')
     .replace(/দেখাও/g, 'console.log')
     .replace(/ইনপুট/g, 'prompt')
     .replace(/আউটপুট/g, 'alertAndOutput')
@@ -34,8 +34,6 @@ function banglaToJS(code) {
     // স্ট্রিং ফাংশন
     .replace(/দৈর্ঘ্য/g, 'length')
     .replace(/ছাঁটাই/g, 'trim')
-    //.replace(/বড়হাতের/g, 'toUpperCase')
-    //.replace(/ছোটহাতের/g, 'toLowerCase')
     .replace(/জোড়া/g, 'concat')
 
     .replace(/রাখো/g, 'push')
@@ -53,51 +51,47 @@ function banglaToJS(code) {
 
     // গানিতিক
     .replace(/গণিত/g, 'Math')   
-    .replace(/পাই/g, 'PI')                 // π (pi)
-    .replace(/ইউলার/g, 'E')                    // Euler’s number (e)
-    .replace(/সাইন/g, 'sin')               // sine
-    .replace(/কসাইন/g, 'cos')              // cosine
-    .replace(/ট্যান/g, 'tan')               // tangent
-    .replace(/আর্কসাইন/g, 'asin')          // arcsine
-    .replace(/আর্ককোসাইন/g, 'acos')         // arccosine
-    .replace(/আর্কট্যান/g, 'atan') 
+    .replace(/পাই/g, 'PI')
+    .replace(/ইউলার/g, 'E')
+    .replace(/সাইন/g, 'sin')
+    .replace(/কসাইন/g, 'cos')
+    .replace(/ট্যান/g, 'tan')
+    .replace(/আর্কসাইন/g, 'asin')
+    .replace(/আর্ককোসাইন/g, 'acos')
+    .replace(/আর্কট্যান/g, 'atan')
     .replace(/গুননিয়ক/g, 'gcd')
     .replace(/গুনিতক/g, 'lcm')
-    .replace(/লগ/g, 'log')                 // natural logarithm (ln)
-    .replace(/লগ১০/g, 'log10')             // log base 10
-    .replace(/বর্গমূল/g, 'sqrt')            // square root
-    .replace(/ঘাত/g, 'pow')                // power
-    .replace(/নিচ/g, 'floor')         // floor (round down)
-    .replace(/উপর/g, 'ceil')        // ceil (round up)
-    .replace(/রাউন্ড/g, 'round')           // round (nearest integer)
-    .replace(/পরম_মান/g, 'abs')            // absolute value
-    .replace(/ন্যূনতম/g, 'min')            // minimum
-    .replace(/সর্বাধিক/g, 'max')            // maximum
-    .replace(/র‌্যান্ডম/g, 'random')         // random decimal between 0 and 1
+    .replace(/লগ১০/g, 'log10')
+    .replace(/লগ/g, 'log')
+    .replace(/বর্গমূল/g, 'sqrt')
+    .replace(/ঘাত/g, 'pow')
+    .replace(/নিচ/g, 'floor')
+    .replace(/উপর/g, 'ceil')
+    .replace(/রাউন্ড/g, 'round')
+    .replace(/পরম_মান/g, 'abs')
+    .replace(/ন্যূনতম/g, 'min')
+    .replace(/সর্বাধিক/g, 'max')
+    .replace(/র‌্যান্ডম/g, 'random')
 
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
 }
 
-// English to Bangla number converter
-function convertNumbersToBangla(text) {
-  return text.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
-}
-
+// বুলিয়ান কনভার্টার
 function convertBoolToBangla(text) {
   if (text === true) return 'সত্য';
   if (text === false) return 'মিথ্যা';
   return text;
 }
 
+// ইংরেজি → বাংলা সংখ্যা কনভার্টার
 function convertNumbersToBangla(text) {
   text = convertBoolToBangla(text);
   text = text.toString();
   return text.replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 }
 
-
-// আউটপুট div এবং alert দুই জায়গাতেই দেখাবে এবং সংখ্যা বাংলা করবে
+// আউটপুট দেখানোর ফাংশন
 function alertAndOutput(message) {
   const converted = convertNumbersToBangla(message);
   alert(converted);
@@ -105,14 +99,32 @@ function alertAndOutput(message) {
   outputDiv.textContent += converted + '\n';
 }
 
+// কথা_বলো ফাংশন
+function কথা_বলো(str) {
+  speakText(str);
+}
+
+// Text-to-Speech ফাংশন
+function speakText(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
+  } else {
+    alert(
+      "Text-to-speech not supported in your browser. Please use a different browser."
+    );
+  }
+}
+
+// রানার ফাংশন
 function runBanglaCode() {
   const bnCode = document.getElementById('banglaCode').value;
   const jsCode = banglaToJS(bnCode);
 
   const outputDiv = document.getElementById('output');
-  outputDiv.textContent = ''; // Clear previous output
+  outputDiv.textContent = ''; // পূর্বের আউটপুট মুছে ফেলা
 
-  // Override console.log
+  // console.log ওভাররাইড
   const originalConsoleLog = console.log;
   console.log = function (...args) {
     const converted = args.map(arg => convertNumbersToBangla(arg)).join(' ');
