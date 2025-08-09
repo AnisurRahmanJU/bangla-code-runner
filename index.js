@@ -11,16 +11,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // A tiny transpiler: maps Bangla keywords (and a few variants) -> JavaScript
 const KEYWORD_MAP = [
-  [ /\bচলক\b/g, 'let' ],              // variable
-  [ /\bস্থায়ী\b/g, 'const' ],         // const
-  [ /\bপ্রিন্ট\b/g, 'console.log' ],  // print
+  [ /\bধরি\b/g, 'let' ],              // variable
+  [ /\bধ্রুবক\g,\b/g, 'const' ],         // const
+  [ /\bদেখাও\b/g, 'console.log' ],  // print
   [ /\bযদি\b/g, 'if' ],               // if
   [ /\bনাহলে\b/g, 'else' ],          // else
-  [ /\bযখন\b/g, 'while' ],          // while
-  [ /\bওপরের\b/g, 'for' ],           // for (very rough)
+  [ /\bযতক্ষণ/g\b/g, 'while' ],          // while
+  [ /\লুপ\b/g, 'for' ],           // for (very rough)
   [ /\bফাংশন\b/g, 'function' ],      // function
   [ /\bফেরত\b/g, 'return' ],         // return
-  [ /\bসেট\b/g, '=' ],                // assignment word (optional)
   [ /\b&&\b/g, '&&' ],                // keep logicals
   [ /\b\|\|\b/g, '||' ],
   // numeric literals and operators remain the same
