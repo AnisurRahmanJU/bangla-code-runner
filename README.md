@@ -2,7 +2,7 @@
 <img src="bncoderun.PNG" >
 
 বাংলা কোড রানার একটি অনলাইন প্ল্যাটফর্ম যা ব্যবহারকারীদের বাংলা কোড রান এবং টেস্ট করার সুযোগ দেয়। এটি ছোটদের জন্য একটি সহজ এবং কার্যকরী টুল, যা বাংলা কোড লেখা, রান করা এবং ডিবাগ করা আরও সহজ করে তোলে।
-> প্রকাশিত - [**```Programming24 School```**](https://programming24.school.blog/%e0%a6%ac%e0%a6%be%e0%a6%82%e0%a6%b2%e0%a6%be-%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%97%e0%a7%8d%e0%a6%b0%e0%a6%be%e0%a6%ae%e0%a6%bf%e0%a6%82-%e0%a6%ad%e0%a6%be%e0%a6%b7%e0%a6%be/)
+> News - [**```Programming24 School```**](https://programming24.school.blog/%e0%a6%ac%e0%a6%be%e0%a6%82%e0%a6%b2%e0%a6%be-%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%97%e0%a7%8d%e0%a6%b0%e0%a6%be%e0%a6%ae%e0%a6%bf%e0%a6%82-%e0%a6%ad%e0%a6%be%e0%a6%b7%e0%a6%be/)
 
 > লাইভ পেইজ -
 [**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
