@@ -7,6 +7,8 @@
 > **```লাইভ পেইজ```** -
 [**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
+> [**```পতাকা();```**](https://www.potaka.io/) **```থেকে অনুপ্রাণিত```**
+
 ```py
 // Input/Output
 ধরি নাম = ইনপুট("তোমার নাম কি?")
