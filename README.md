@@ -14,7 +14,7 @@
 ```
 
 > ```ডকুমেন্টেশন``` -
-[**```Docs```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/docs)
+[**```Docs```**](docs/ডকুমেন্টেশন.md)
 
 ```py
 // Input
