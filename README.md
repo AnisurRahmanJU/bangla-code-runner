@@ -42,6 +42,5 @@
 বলো();
 ```
 
-> **```বাংলা কোডের উদাহরণ```** -
-[**```Examples```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
+>**```Examples```** - [**```উদাহরণ```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
 
