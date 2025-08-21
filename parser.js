@@ -13,6 +13,10 @@ function banglaToJS(code) {
     .replace(/মিথ্যা/g, 'false')
     .replace(/এবং/g, '&&')
     .replace(/অথবা/g, '||')
+    .replace(/সুইচ/g, 'switch')
+    .replace(/কেস/g, 'case')
+    .replace(/ডিফল্ট/g, 'default')
+    .replace(/নাল/g, 'null')
 
     // লুপ
     .replace(/লুপ/g, 'for')
