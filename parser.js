@@ -1,3 +1,4 @@
+
 function banglaToJS(code) {
   return code
     // চলক ও ধ্রুবক
@@ -35,7 +36,10 @@ function banglaToJS(code) {
     .replace(/দৈর্ঘ্য/g, 'length')
     .replace(/ছাঁটাই/g, 'trim')
     .replace(/জোড়া/g, 'concat')
-
+    .replace(/কপি/g, 'copy')
+    .replace(/তুলনা/g, 'compare')
+    
+    // অ্যারে
     .replace(/রাখো/g, 'push')
     .replace(/সরাও/g, 'pop')
     .replace(/সাজাও/g, 'sort')
@@ -75,7 +79,22 @@ function banglaToJS(code) {
     .replace(/র‌্যান্ডম/g, 'random')
 
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
-    .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
+    .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d))
+
+}
+
+// কপি ফাংশন
+function copy(str) {
+  return str;  // স্ট্রিংয়ের কপি করা
+}
+
+// তুলনা ফাংশন
+function compare(str1, str2) {
+  if (str1 === str2) {
+    console.log("স্ট্রিং দুটি সমান");
+  } else {
+    console.log("স্ট্রিং দুটি সমান নয়");
+  }
 }
 
 // বুলিয়ান কনভার্টার
@@ -91,38 +110,13 @@ function convertNumbersToBangla(text) {
   text = text.toString();
   return text.replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 }
+
 // আউটপুট div এবং alert দুই জায়গাতেই দেখাবে এবং সংখ্যা বাংলা করবে
 function alertAndOutput(message) {
   const converted = convertNumbersToBangla(message);
   alert(converted);
   const outputDiv = document.getElementById('output');
   outputDiv.textContent += converted + '\n';
-}
-
-// আউটপুট দেখানোর ফাংশন
-function alertAndOutput(message) {
-  const converted = convertNumbersToBangla(message);
-  alert(converted);
-  const outputDiv = document.getElementById('output');
-  outputDiv.textContent += converted + '\n';
-}
-
-
-// কথা_বলো ফাংশন
-function কথা_বলো(str) {
-  speakText(str);
-}
-
-// Text-to-Speech ফাংশন
-function speakText(text) {
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
-  } else {
-    alert(
-      "Text-to-speech not supported in your browser. Please use a different browser."
-    );
-  }
 }
 
 // রানার ফাংশন
