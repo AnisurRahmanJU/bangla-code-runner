@@ -24,7 +24,7 @@ function banglaToJS(code) {
     .replace(/করো/g, 'do')
     .replace(/থামো/g, 'break')
     .replace(/বাদ/g, 'continue')
-    .replace(/যার_মধ্যে/g, 'in')
+    .replace(/মধ্যে/g, 'in')
 
     // ফাংশন
     .replace(/ফাংশন/g, 'function')
