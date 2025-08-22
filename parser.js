@@ -86,22 +86,7 @@ function banglaToJS(code) {
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d))
 
 }
-// কথা_বলো ফাংশন
 
-function কথা_বলো(str) {
-  speakText(str);
-}
-
-function speakText(text) {
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
-  } else {
-    alert(
-      "Text-to-speech not supported in your browser. Please use a different browser."
-    );
-  }
-}
 
 // কপি ফাংশন
 function copy(str) {
@@ -114,6 +99,22 @@ function compare(str1, str2) {
     console.log("স্ট্রিং দুটি সমান");
   } else {
     console.log("স্ট্রিং দুটি সমান নয়");
+  }
+}
+
+// কথাবলো ফাংশন
+function কথা_বলো(str) {
+  speakText(str);
+}
+
+// Text-to-speech ফাংশন
+function speakText(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "bn-BD"; // Bengali language setting for better pronunciation
+    speechSynthesis.speak(utterance);
+  } else {
+    alert("Text-to-speech not supported in your browser. Please use a different browser.");
   }
 }
 
