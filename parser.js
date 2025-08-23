@@ -90,6 +90,7 @@ function banglaToJS(code) {
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d))
 
 }
+
 // ছবি আঁকা ফাংশন
 
 // Global buffer to keep track of all draw calls
@@ -135,6 +136,12 @@ function draw(shape, color = 'কালো', animation = null) {
 
   // Calculate vertical position based on previous shapes
   const posY = 100 + drawnShapes.length * 120;
+
+  // Dynamically increase canvas height if needed
+  const requiredHeight = posY + 100;
+  if (canvas.height < requiredHeight) {
+    canvas.height = requiredHeight;
+  }
 
   drawnShapes.push({
     shape: shape.trim(),
@@ -239,21 +246,23 @@ function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
 }
 
 function drawTurtle(ctx, cx, cy, size) {
+  // Body
   ctx.beginPath();
   ctx.arc(cx, cy, size / 2, 0, 2 * Math.PI);
   ctx.fill();
 
+  // Legs
   const leg = size / 5;
   ctx.fillRect(cx - size / 2 - leg / 2, cy - leg / 2, leg, leg);
   ctx.fillRect(cx + size / 2 - leg / 2, cy - leg / 2, leg, leg);
   ctx.fillRect(cx - leg / 2, cy - size / 2 - leg / 2, leg, leg);
   ctx.fillRect(cx - leg / 2, cy + size / 2 - leg / 2, leg, leg);
 
+  // Head
   ctx.beginPath();
   ctx.arc(cx, cy - size / 1.2, leg / 1.5, 0, 2 * Math.PI);
   ctx.fill();
 }
-
 
 // কপি ফাংশন
 function copy(str) {
