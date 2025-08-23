@@ -82,9 +82,176 @@ function banglaToJS(code) {
     .replace(/সর্বাধিক/g, 'max')
     .replace(/র‌্যান্ডম/g, 'random')
 
+    // আঁকো 
+    .replace(/আঁকো\s*\(/g, 'draw(')
+    .replace(/রং_করো\s*\(/g, '')
+
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d))
 
+}
+// ছবি আঁকা ফাংশন
+
+// Global buffer to keep track of all draw calls
+const drawnShapes = [];
+
+function draw(shape, color = 'কালো', animation = null) {
+  const outputDiv = document.getElementById('output');
+
+  // Create canvas only once
+  let canvas = document.getElementById('canvas');
+  let ctx;
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    canvas.id = 'canvas';
+    canvas.width = 500;
+    canvas.height = 600;
+    canvas.style.backgroundColor = window.getComputedStyle(outputDiv).backgroundColor;
+    canvas.style.border = '2px solid #334155';
+    canvas.style.display = 'block';
+    canvas.style.margin = '20px auto';
+    outputDiv.appendChild(canvas);
+    ctx = canvas.getContext('2d');
+
+    // Start animation loop
+    requestAnimationFrame(function frame() {
+      animate(canvas, ctx);
+      requestAnimationFrame(frame);
+    });
+  } else {
+    ctx = canvas.getContext('2d');
+  }
+
+  // Translate Bengali color to CSS color
+  const colors = {
+    'লাল': 'red',
+    'সবুজ': 'green',
+    'নীল': 'blue',
+    'হলুদ': 'yellow',
+    'কালো': 'black',
+    'সাদা': 'white'
+  };
+  const fillColor = colors[color.trim()] || color;
+
+  // Calculate vertical position based on previous shapes
+  const posY = 100 + drawnShapes.length * 120;
+
+  drawnShapes.push({
+    shape: shape.trim(),
+    color: fillColor,
+    animation: animation ? animation.trim() : null,
+    x: 250,     // fixed X center
+    y: posY,
+    dx: 2,
+    dy: 2,
+    angle: 0,
+    size: 80
+  });
+}
+
+function animate(canvas, ctx) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawnShapes.forEach(obj => {
+    ctx.save();
+
+    if (obj.animation === 'ঘোরাও') {
+      ctx.translate(obj.x, obj.y);
+      ctx.rotate(obj.angle);
+      ctx.translate(-obj.x, -obj.y);
+      obj.angle += 0.05;
+
+    } else if (obj.animation === 'লাফাও') {
+      obj.x += obj.dx;
+      obj.y += obj.dy;
+      if (obj.x + obj.size / 2 > canvas.width || obj.x - obj.size / 2 < 0) obj.dx *= -1;
+      if (obj.y + obj.size / 2 > canvas.height || obj.y - obj.size / 2 < 0) obj.dy *= -1;
+
+    } else if (obj.animation === 'সরাও') {
+      obj.x += obj.dx;
+      if (obj.x + obj.size / 2 > canvas.width || obj.x - obj.size / 2 < 0) obj.dx *= -1;
+    }
+
+    drawShape(ctx, obj);
+    ctx.restore();
+  });
+}
+
+function drawShape(ctx, obj) {
+  const { shape, x, y, size, color } = obj;
+  ctx.fillStyle = color;
+
+  switch (shape) {
+    case 'বৃত্ত':
+      ctx.beginPath();
+      ctx.arc(x, y, size / 2, 0, 2 * Math.PI);
+      ctx.fill();
+      break;
+
+    case 'বর্গক্ষেত্র':
+      ctx.fillRect(x - size / 2, y - size / 2, size, size);
+      break;
+
+    case 'আয়তক্ষেত্র':
+      ctx.fillRect(x - size, y - size / 2, size * 2, size);
+      break;
+
+    case 'ত্রিভুজ':
+      ctx.beginPath();
+      ctx.moveTo(x, y - size / 2);
+      ctx.lineTo(x - size / 2, y + size / 2);
+      ctx.lineTo(x + size / 2, y + size / 2);
+      ctx.closePath();
+      ctx.fill();
+      break;
+
+    case 'তারা':
+      drawStar(ctx, x, y, 5, size / 2, size / 4);
+      break;
+
+    case 'কচ্ছপ':
+      drawTurtle(ctx, x, y, size);
+      break;
+
+    default:
+      console.warn("অজানা আকৃতি:", shape);
+  }
+}
+
+function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+  let rot = Math.PI / 2 * 3;
+  const step = Math.PI / spikes;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - outerRadius);
+  for (let i = 0; i < spikes; i++) {
+    const x1 = cx + Math.cos(rot) * outerRadius;
+    const y1 = cy + Math.sin(rot) * outerRadius;
+    ctx.lineTo(x1, y1);
+    rot += step;
+    const x2 = cx + Math.cos(rot) * innerRadius;
+    const y2 = cy + Math.sin(rot) * innerRadius;
+    ctx.lineTo(x2, y2);
+    rot += step;
+  }
+  ctx.lineTo(cx, cy - outerRadius);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawTurtle(ctx, cx, cy, size) {
+  ctx.beginPath();
+  ctx.arc(cx, cy, size / 2, 0, 2 * Math.PI);
+  ctx.fill();
+
+  const leg = size / 5;
+  ctx.fillRect(cx - size / 2 - leg / 2, cy - leg / 2, leg, leg);
+  ctx.fillRect(cx + size / 2 - leg / 2, cy - leg / 2, leg, leg);
+  ctx.fillRect(cx - leg / 2, cy - size / 2 - leg / 2, leg, leg);
+  ctx.fillRect(cx - leg / 2, cy + size / 2 - leg / 2, leg, leg);
+
+  ctx.beginPath();
+  ctx.arc(cx, cy - size / 1.2, leg / 1.5, 0, 2 * Math.PI);
+  ctx.fill();
 }
 
 
