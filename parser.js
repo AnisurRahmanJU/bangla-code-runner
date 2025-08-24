@@ -220,10 +220,31 @@ function drawShape(ctx, obj) {
       drawTurtle(ctx, x, y, size);
       break;
 
+    case 'হৃদয়':
+      drawHeart(ctx, x, y, size);
+      break;
+
+    case 'পঞ্চভুজ':
+      drawPentagon(ctx, x, y, size);
+      break;
+
+    case 'মানুষ':
+      drawHuman(ctx, x, y, size);
+      break;
+
+    case 'বাড়ি':
+      drawHouse(ctx, x, y, size);
+      break;
+
+    case 'গাড়ি':
+      drawCar(ctx, x, y, size);
+      break;
+
     default:
       console.warn("অজানা আকৃতি:", shape);
   }
 }
+
 
 function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
   let rot = Math.PI / 2 * 3;
@@ -263,6 +284,102 @@ function drawTurtle(ctx, cx, cy, size) {
   ctx.arc(cx, cy - size / 1.2, leg / 1.5, 0, 2 * Math.PI);
   ctx.fill();
 }
+
+function drawHeart(ctx, x, y, size) {
+  const topCurveHeight = size * 0.3;
+  ctx.beginPath();
+  ctx.moveTo(x, y + topCurveHeight);
+  ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+  ctx.bezierCurveTo(x - size / 2, y + size, x, y + size, x, y + size * 1.4);
+  ctx.bezierCurveTo(x, y + size, x + size / 2, y + size, x + size / 2, y + topCurveHeight);
+  ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawPentagon(ctx, x, y, size) {
+  const sides = 5;
+  const angle = (2 * Math.PI) / sides;
+  ctx.beginPath();
+  for (let i = 0; i < sides; i++) {
+    const px = x + size * Math.cos(angle * i - Math.PI / 2);
+    const py = y + size * Math.sin(angle * i - Math.PI / 2);
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawHuman(ctx, x, y, size) {
+  const headRadius = size * 0.15;
+  const bodyHeight = size * 0.5;
+  const limbLength = size * 0.3;
+
+  // Head
+  ctx.beginPath();
+  ctx.arc(x, y - bodyHeight / 2 - headRadius, headRadius, 0, 2 * Math.PI);
+  ctx.fill();
+
+  // Body
+  ctx.beginPath();
+  ctx.moveTo(x, y - bodyHeight / 2);
+  ctx.lineTo(x, y + bodyHeight / 2);
+  ctx.strokeStyle = ctx.fillStyle;
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // Arms
+  ctx.beginPath();
+  ctx.moveTo(x - limbLength, y);
+  ctx.lineTo(x + limbLength, y);
+  ctx.stroke();
+
+  // Legs
+  ctx.beginPath();
+  ctx.moveTo(x, y + bodyHeight / 2);
+  ctx.lineTo(x - limbLength / 2, y + bodyHeight / 2 + limbLength);
+  ctx.moveTo(x, y + bodyHeight / 2);
+  ctx.lineTo(x + limbLength / 2, y + bodyHeight / 2 + limbLength);
+  ctx.stroke();
+}
+
+function drawHouse(ctx, x, y, size) {
+  // Base
+  ctx.fillRect(x - size / 2, y, size, size / 2);
+
+  // Roof (triangle)
+  ctx.beginPath();
+  ctx.moveTo(x, y - size / 2);
+  ctx.lineTo(x - size / 2, y);
+  ctx.lineTo(x + size / 2, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawCar(ctx, x, y, size) {
+  const carWidth = size;
+  const carHeight = size / 2;
+
+  // Body
+  ctx.fillRect(x - carWidth / 2, y - carHeight / 2, carWidth, carHeight);
+
+  // Top (trapezoid-like)
+  ctx.beginPath();
+  ctx.moveTo(x - carWidth / 4, y - carHeight / 2);
+  ctx.lineTo(x - carWidth / 8, y - size / 1.5);
+  ctx.lineTo(x + carWidth / 8, y - size / 1.5);
+  ctx.lineTo(x + carWidth / 4, y - carHeight / 2);
+  ctx.closePath();
+  ctx.fill();
+
+  // Wheels
+  ctx.beginPath();
+  ctx.arc(x - carWidth / 3, y + carHeight / 2, size / 8, 0, 2 * Math.PI);
+  ctx.arc(x + carWidth / 3, y + carHeight / 2, size / 8, 0, 2 * Math.PI);
+  ctx.fill();
+}
+
 
 // কপি ফাংশন
 function copy(str) {
