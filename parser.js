@@ -385,7 +385,6 @@ function drawCar(ctx, x, y, size) {
 }
 
 function drawSnake(ctx, x, y, size) {
-function drawSnake(ctx, x, y, size) {
   const tailDotRadius = size / 12;
   const tailLength = 20; // number of dots in the tail
   const spacing = tailDotRadius * 2.2;
