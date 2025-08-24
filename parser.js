@@ -225,6 +225,7 @@ function drawShape(ctx, obj) {
       break;
 
     case 'হৃদয়':
+    case 'হৃদয়':
       drawHeart(ctx, x, y, size);
       break;
 
@@ -293,13 +294,16 @@ function drawHeart(ctx, x, y, size) {
   const topCurveHeight = size * 0.3;
   ctx.beginPath();
   ctx.moveTo(x, y + topCurveHeight);
+
   ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
   ctx.bezierCurveTo(x - size / 2, y + size, x, y + size, x, y + size * 1.4);
   ctx.bezierCurveTo(x, y + size, x + size / 2, y + size, x + size / 2, y + topCurveHeight);
   ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+
   ctx.closePath();
   ctx.fill();
 }
+
 
 function drawPentagon(ctx, x, y, size) {
   const sides = 5;
