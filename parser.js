@@ -385,26 +385,27 @@ function drawCar(ctx, x, y, size) {
 }
 
 function drawSnake(ctx, x, y, size) {
-  const segmentRadius = size / 10;
-  const dotCount = 20;
-  const spacing = segmentRadius * 2;
+function drawSnake(ctx, x, y, size) {
+  const tailDotRadius = size / 12;
+  const tailLength = 20; // number of dots in the tail
+  const spacing = tailDotRadius * 2.2;
 
-  // Draw tail/body as small dots
-  for (let i = 0; i < dotCount; i++) {
+  // Draw tail: a straight single line of dots
+  for (let i = tailLength; i > 0; i--) {
     const posX = x - i * spacing;
     ctx.beginPath();
-    ctx.arc(posX, y, segmentRadius, 0, 2 * Math.PI);
+    ctx.arc(posX, y, tailDotRadius, 0, 2 * Math.PI);
     ctx.fill();
   }
 
-  // Draw head (slightly larger)
-  const headRadius = segmentRadius * 1.5;
+  // Draw head (larger)
+  const headRadius = tailDotRadius * 1.8;
   ctx.beginPath();
   ctx.arc(x, y, headRadius, 0, 2 * Math.PI);
   ctx.fill();
 
-  // Draw eyes
-  const eyeOffset = headRadius * 0.5;
+  // Eyes on the head
+  const eyeOffset = headRadius * 0.4;
   ctx.fillStyle = 'white';
   ctx.beginPath();
   ctx.arc(x - eyeOffset, y - eyeOffset, headRadius * 0.3, 0, 2 * Math.PI);
@@ -417,6 +418,7 @@ function drawSnake(ctx, x, y, size) {
   ctx.arc(x + eyeOffset, y - eyeOffset, headRadius * 0.15, 0, 2 * Math.PI);
   ctx.fill();
 }
+
 
 
 
