@@ -385,44 +385,39 @@ function drawCar(ctx, x, y, size) {
 }
 
 function drawSnake(ctx, x, y, size) {
-  const segments = 12; // number of snake body parts
-  const segmentRadius = size / 8;
-  const spacing = segmentRadius * 1.8;
-  const amplitude = segmentRadius * 1.5;
+  const segmentRadius = size / 10;
+  const dotCount = 20;
+  const spacing = segmentRadius * 2;
 
-  // Draw snake body
-  for (let i = 0; i < segments; i++) {
-    const angle = (i % 2 === 0 ? 1 : -1);
-    const offsetX = x - spacing * (segments / 2) + i * spacing;
-    const offsetY = y + angle * amplitude;
-
+  // Draw tail/body as small dots
+  for (let i = 0; i < dotCount; i++) {
+    const posX = x - i * spacing;
     ctx.beginPath();
-    ctx.arc(offsetX, offsetY, segmentRadius, 0, 2 * Math.PI);
+    ctx.arc(posX, y, segmentRadius, 0, 2 * Math.PI);
     ctx.fill();
   }
 
-  // Draw snake head at the end
-  const headX = x + spacing * (segments / 2);
-  const headY = y;
-
+  // Draw head (slightly larger)
+  const headRadius = segmentRadius * 1.5;
   ctx.beginPath();
-  ctx.arc(headX, headY, segmentRadius * 1.2, 0, 2 * Math.PI);
+  ctx.arc(x, y, headRadius, 0, 2 * Math.PI);
   ctx.fill();
 
-  // Eyes (optional)
-  const eyeOffset = segmentRadius * 0.5;
+  // Draw eyes
+  const eyeOffset = headRadius * 0.5;
   ctx.fillStyle = 'white';
   ctx.beginPath();
-  ctx.arc(headX - eyeOffset, headY - eyeOffset, segmentRadius * 0.3, 0, 2 * Math.PI);
-  ctx.arc(headX + eyeOffset, headY - eyeOffset, segmentRadius * 0.3, 0, 2 * Math.PI);
+  ctx.arc(x - eyeOffset, y - eyeOffset, headRadius * 0.3, 0, 2 * Math.PI);
+  ctx.arc(x + eyeOffset, y - eyeOffset, headRadius * 0.3, 0, 2 * Math.PI);
   ctx.fill();
 
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.arc(headX - eyeOffset, headY - eyeOffset, segmentRadius * 0.15, 0, 2 * Math.PI);
-  ctx.arc(headX + eyeOffset, headY - eyeOffset, segmentRadius * 0.15, 0, 2 * Math.PI);
+  ctx.arc(x - eyeOffset, y - eyeOffset, headRadius * 0.15, 0, 2 * Math.PI);
+  ctx.arc(x + eyeOffset, y - eyeOffset, headRadius * 0.15, 0, 2 * Math.PI);
   ctx.fill();
 }
+
 
 
 // কপি ফাংশন
