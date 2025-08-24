@@ -385,42 +385,38 @@ function drawCar(ctx, x, y, size) {
 }
 
 function drawSnake(ctx, x, y, size) {
-  const segments = 12; // number of snake body parts
-  const segmentRadius = size / 8;
-  const spacing = segmentRadius * 1.8;
-  const amplitude = segmentRadius * 1.5;
+  const tailDotRadius = size / 12;
+  const tailLength = 20;
+  const spacing = tailDotRadius * 2.5;
 
-  // Draw snake body
-  for (let i = 0; i < segments; i++) {
-    const angle = (i % 2 === 0 ? 1 : -1);
-    const offsetX = x - spacing * (segments / 2) + i * spacing;
-    const offsetY = y + angle * amplitude;
+  ctx.fillStyle = ctx.fillStyle || 'green'; // fallback if color not set
 
+  // Draw tail as dots from left to right, ending in the head
+  for (let i = tailLength - 1; i >= 0; i--) {
+    const posX = x - (i + 1) * spacing;
     ctx.beginPath();
-    ctx.arc(offsetX, offsetY, segmentRadius, 0, 2 * Math.PI);
+    ctx.arc(posX, y, tailDotRadius, 0, 2 * Math.PI);
     ctx.fill();
   }
 
-  // Draw snake head at the end
-  const headX = x + spacing * (segments / 2);
-  const headY = y;
-
+  // Draw head (larger circle)
+  const headRadius = tailDotRadius * 1.8;
   ctx.beginPath();
-  ctx.arc(headX, headY, segmentRadius * 1.2, 0, 2 * Math.PI);
+  ctx.arc(x, y, headRadius, 0, 2 * Math.PI);
   ctx.fill();
 
-  // Eyes (optional)
-  const eyeOffset = segmentRadius * 0.5;
+  // Eyes
+  const eyeOffset = headRadius * 0.4;
   ctx.fillStyle = 'white';
   ctx.beginPath();
-  ctx.arc(headX - eyeOffset, headY - eyeOffset, segmentRadius * 0.3, 0, 2 * Math.PI);
-  ctx.arc(headX + eyeOffset, headY - eyeOffset, segmentRadius * 0.3, 0, 2 * Math.PI);
+  ctx.arc(x - eyeOffset, y - eyeOffset, headRadius * 0.3, 0, 2 * Math.PI);
+  ctx.arc(x + eyeOffset, y - eyeOffset, headRadius * 0.3, 0, 2 * Math.PI);
   ctx.fill();
 
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.arc(headX - eyeOffset, headY - eyeOffset, segmentRadius * 0.15, 0, 2 * Math.PI);
-  ctx.arc(headX + eyeOffset, headY - eyeOffset, segmentRadius * 0.15, 0, 2 * Math.PI);
+  ctx.arc(x - eyeOffset, y - eyeOffset, headRadius * 0.15, 0, 2 * Math.PI);
+  ctx.arc(x + eyeOffset, y - eyeOffset, headRadius * 0.15, 0, 2 * Math.PI);
   ctx.fill();
 }
 
