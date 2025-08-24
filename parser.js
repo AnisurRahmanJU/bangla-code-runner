@@ -216,6 +216,10 @@ function drawShape(ctx, obj) {
       drawStar(ctx, x, y, 5, size / 2, size / 4);
       break;
 
+    case 'সাপ':
+      drawSnake(ctx, x, y, size);
+      break;
+
     case 'কচ্ছপ':
       drawTurtle(ctx, x, y, size);
       break;
@@ -380,6 +384,37 @@ function drawCar(ctx, x, y, size) {
   ctx.fill();
 }
 
+function drawSnake(ctx, x, y, size) {
+  const segmentRadius = size / 8;
+  const segments = 10;
+  const waveAmplitude = segmentRadius * 2;
+
+  ctx.beginPath();
+  for (let i = 0; i < segments; i++) {
+    const angle = (i % 2 === 0 ? 1 : -1) * waveAmplitude;
+    const segX = x + i * segmentRadius * 1.5;
+    const segY = y + angle * Math.sin(i / 2);
+    ctx.moveTo(segX + segmentRadius, segY);
+    ctx.arc(segX, segY, segmentRadius, 0, 2 * Math.PI);
+  }
+  ctx.fill();
+
+  // Optional: Add eyes to the head
+  const headX = x + (segments - 1) * segmentRadius * 1.5;
+  const headY = y;
+
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.arc(headX - segmentRadius / 2, headY - segmentRadius / 2, segmentRadius / 4, 0, 2 * Math.PI);
+  ctx.arc(headX + segmentRadius / 2, headY - segmentRadius / 2, segmentRadius / 4, 0, 2 * Math.PI);
+  ctx.fill();
+
+  ctx.fillStyle = 'black';
+  ctx.beginPath();
+  ctx.arc(headX - segmentRadius / 2, headY - segmentRadius / 2, segmentRadius / 8, 0, 2 * Math.PI);
+  ctx.arc(headX + segmentRadius / 2, headY - segmentRadius / 2, segmentRadius / 8, 0, 2 * Math.PI);
+  ctx.fill();
+}
 
 // কপি ফাংশন
 function copy(str) {
