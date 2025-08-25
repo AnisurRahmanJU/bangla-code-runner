@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ম্যাজিক বোর্ড</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    #board-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    canvas {
+      flex: 1;
+      background-color: black;
+      cursor: crosshair;
+    }
+
+    #controls {
+      width: 60px;
+      background-color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 5px;
+    }
+
+    .color-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 8px 0;
+      cursor: pointer;
+      border: 2px solid white;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px;
+      font-size: 12px;
+      background-color: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<div id="board-container">
+  <canvas id="drawingCanvas"></canvas>
+  <div id="controls">
+    <!-- Color Palette -->
+    <div class="color-dot" style="background: red;" onclick="setColor('red')"></div>
+    <div class="color-dot" style="background: green;" onclick="setColor('green')"></div>
+    <div class="color-dot" style="background: blue;" onclick="setColor('blue')"></div>
+    <div class="color-dot" style="background: yellow;" onclick="setColor('yellow')"></div>
+    <div class="color-dot" style="background: white;" onclick="setColor('white')"></div>
+    <div class="color-dot" style="background: cyan;" onclick="setColor('cyan')"></div>
+
+    <!-- Buttons -->
+    <button onclick="saveImage()">Save</button>
+    <button onclick="clearBoard()">Clear</button>
+    <button onclick="closeBoard()">Close</button>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('drawingCanvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let currentColor = 'white';
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth - 60; // space for controls
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function setColor(color) {
+    currentColor = color;
+    ctx.strokeStyle = currentColor;
+  }
+
+  function startDraw(e) {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(getX(e), getY(e));
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.lineTo(getX(e), getY(e));
+    ctx.strokeStyle = currentColor;
+    ctx.stroke();
+  }
+
+  function stopDraw() {
+    drawing = false;
+    ctx.beginPath();
+  }
+
+  function getX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+
+  function getY(e) {
+    return e.touches ? e.touches[0].clientY : e.clientY;
+  }
+
+  // Mouse events
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDraw);
+  canvas.addEventListener('mouseout', stopDraw);
+
+  // Touch events
+  canvas.addEventListener('touchstart', startDraw);
+  canvas.addEventListener('touchmove', draw);
+  canvas.addEventListener('touchend', stopDraw);
+
+  // Save image
+  function saveImage() {
+    const link = document.createElement('a');
+    link.download = 'magic_board.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+
+  // Clear board
+  function clearBoard() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Close board
+  function closeBoard() {
+    document.getElementById('board-container').style.display = 'none';
+  }
+
+  // Default color
+  setColor('white');
+</script>
+
+</body>
+</html>
