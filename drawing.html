@@ -1,20 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>আঁকার বোর্ড</title>
 
-  <!-- Bootstrap 5 -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Google Fonts: Baloo 2 -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
+  
+  <!-- Cartoon Bangla Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap" rel="stylesheet" />
 
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
       margin: 0;
-      font-family: 'Baloo 2', cursive, sans-serif;
+      padding: 0;
+      font-family: 'Baloo Da 2', cursive, sans-serif;
       background-color: #001f3f;
       color: white;
       height: 100vh;
@@ -27,39 +32,32 @@
       background: linear-gradient(to right, #0d2b52, #103a6e);
       color: #ffde59;
       text-align: center;
-      padding: 15px;
+      padding: 14px;
       font-size: 1.6rem;
       font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
       flex-shrink: 0;
-      user-select: none;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
 
-    #board-container {
+    #drawingCanvas {
       flex: 1;
-      display: flex;
-      flex-direction: row;
-      overflow: hidden;
-    }
-
-    canvas {
-      flex: 1;
-      background-color: #001f3f;
-      cursor: crosshair;
       display: block;
+      width: 100%;
+      background-color: #001f3f;
       touch-action: none;
+      cursor: crosshair;
     }
 
-    #controls {
-      width: 160px;
-      background: #0d2b52;
+    #footer {
+      background-color: #0d2b52;
+      flex-shrink: 0;
+      padding: 10px 12px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 10px;
-      gap: 1rem;
-      overflow-y: auto;
-      box-shadow: -2px 0 6px rgba(0,0,0,0.3);
+      gap: 10px;
     }
 
     .color-palette {
@@ -70,12 +68,12 @@
     }
 
     .color-dot {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       border: 2px solid white;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .color-dot:hover {
@@ -83,46 +81,27 @@
       border-color: #ffde59;
     }
 
-    .btn-group-vertical {
+    .btn-group {
       display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      width: 100%;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
     }
 
-    @media (max-width: 768px) {
-      #board-container {
-        flex-direction: column;
-      }
+    .btn {
+      min-width: 100px;
+    }
 
-      #controls {
-        width: 100%;
-        height: auto;
-        flex-direction: column;
-        padding: 15px;
-        flex-shrink: 0;
-        box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
-      }
-
-      .color-palette {
-        gap: 8px;
-      }
-
+    @media (max-width: 576px) {
       .color-dot {
-        width: 26px;
-        height: 26px;
+        width: 22px;
+        height: 22px;
       }
 
-      .btn-group-vertical {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .btn-group-vertical .btn {
-        flex: 1 1 auto;
-        min-width: 100px;
+      .btn {
+        min-width: 90px;
+        font-size: 0.85rem;
+        padding: 6px 10px;
       }
     }
   </style>
@@ -131,34 +110,31 @@
 
   <div id="header">ইচ্ছেমতো আঁকো, আঁকতে নেই বাধা</div>
 
-  <div id="board-container">
-    <!-- Drawing Canvas -->
-    <canvas id="drawingCanvas"></canvas>
+  <canvas id="drawingCanvas"></canvas>
 
-    <!-- Sidebar Controls -->
-    <div id="controls">
-      <!-- Color Palette -->
-      <div class="color-palette">
-        <div class="color-dot" style="background: red;" onclick="setColor('red')"></div>
-        <div class="color-dot" style="background: green;" onclick="setColor('green')"></div>
-        <div class="color-dot" style="background: blue;" onclick="setColor('blue')"></div>
-        <div class="color-dot" style="background: yellow;" onclick="setColor('yellow')"></div>
-        <div class="color-dot" style="background: white;" onclick="setColor('white')"></div>
-        <div class="color-dot" style="background: cyan;" onclick="setColor('cyan')"></div>
-        <div class="color-dot" style="background: orange;" onclick="setColor('orange')"></div>
-        <div class="color-dot" style="background: pink;" onclick="setColor('pink')"></div>
-        <div class="color-dot" style="background: lime;" onclick="setColor('lime')"></div>
-        <div class="color-dot" style="background: violet;" onclick="setColor('violet')"></div>
-        <div class="color-dot" style="background: gray;" onclick="setColor('gray')"></div>
-        <div class="color-dot" style="background: brown;" onclick="setColor('brown')"></div>
-      </div>
+  <div id="footer">
+    <!-- Color Palette -->
+    <div class="color-palette">
+      <div class="color-dot" style="background: black;" onclick="setColor('black')"></div>
+      <div class="color-dot" style="background: red;" onclick="setColor('red')"></div>
+      <div class="color-dot" style="background: green;" onclick="setColor('green')"></div>
+      <div class="color-dot" style="background: blue;" onclick="setColor('blue')"></div>
+      <div class="color-dot" style="background: yellow;" onclick="setColor('yellow')"></div>
+      <div class="color-dot" style="background: white;" onclick="setColor('white')"></div>
+      <div class="color-dot" style="background: cyan;" onclick="setColor('cyan')"></div>
+      <div class="color-dot" style="background: orange;" onclick="setColor('orange')"></div>
+      <div class="color-dot" style="background: pink;" onclick="setColor('pink')"></div>
+      <div class="color-dot" style="background: lime;" onclick="setColor('lime')"></div>
+      <div class="color-dot" style="background: violet;" onclick="setColor('violet')"></div>
+      <div class="color-dot" style="background: gray;" onclick="setColor('gray')"></div>
+      <div class="color-dot" style="background: brown;" onclick="setColor('brown')"></div>
+    </div>
 
-      <!-- Buttons -->
-      <div class="btn-group-vertical">
-        <button class="btn btn-success btn-sm" onclick="promptAndSave()">সংরক্ষণ</button>
-        <button class="btn btn-warning btn-sm" onclick="clearBoard()">পরিষ্কার</button>
-        <button class="btn btn-danger btn-sm" onclick="closeTab()">বন্ধ করুন</button>
-      </div>
+    <!-- Buttons -->
+    <div class="btn-group">
+      <button class="btn btn-success btn-sm" onclick="promptAndSave()">সংরক্ষণ</button>
+      <button class="btn btn-warning btn-sm" onclick="clearBoard()">পরিষ্কার</button>
+      <button class="btn btn-danger btn-sm" onclick="closeTab()">বন্ধ করুন</button>
     </div>
   </div>
 
@@ -168,55 +144,42 @@
     let drawing = false;
     let currentColor = 'white';
 
-    function getCanvasOffset() {
-      const rect = canvas.getBoundingClientRect();
-      return { x: rect.left, y: rect.top };
-    }
-
-    function getPosition(e) {
-      const offset = getCanvasOffset();
-      if (e.touches && e.touches.length > 0) {
-        return {
-          x: e.touches[0].clientX - offset.x,
-          y: e.touches[0].clientY - offset.y
-        };
-      } else {
-        return {
-          x: e.clientX - offset.x,
-          y: e.clientY - offset.y
-        };
-      }
-    }
-
     function resizeCanvas() {
-      const controls = document.getElementById('controls');
       const header = document.getElementById('header');
-      const isMobile = window.innerWidth <= 768;
-
-      if (isMobile) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - controls.offsetHeight - header.offsetHeight;
-      } else {
-        canvas.width = window.innerWidth - controls.offsetWidth;
-        canvas.height = window.innerHeight - header.offsetHeight;
-      }
-
+      const footer = document.getElementById('footer');
+      const height = window.innerHeight - header.offsetHeight - footer.offsetHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = height;
       ctx.fillStyle = '#001f3f';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    window.addEventListener('orientationchange', resizeCanvas);
+    window.addEventListener('load', resizeCanvas);
 
     function setColor(color) {
       currentColor = color;
-      ctx.strokeStyle = currentColor;
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top
+        };
+      }
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
     }
 
     function startDraw(e) {
       e.preventDefault();
       drawing = true;
-      const pos = getPosition(e);
+      const pos = getPos(e);
       ctx.beginPath();
       ctx.moveTo(pos.x, pos.y);
     }
@@ -224,7 +187,7 @@
     function draw(e) {
       if (!drawing) return;
       e.preventDefault();
-      const pos = getPosition(e);
+      const pos = getPos(e);
       ctx.lineWidth = 3;
       ctx.lineCap = 'round';
       ctx.lineTo(pos.x, pos.y);
@@ -264,16 +227,9 @@
     }
 
     function saveImage(filename) {
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = canvas.width;
-      tempCanvas.height = canvas.height;
-      const tempCtx = tempCanvas.getContext('2d');
-      tempCtx.fillStyle = '#001f3f';
-      tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-      tempCtx.drawImage(canvas, 0, 0);
       const link = document.createElement('a');
       link.download = filename;
-      link.href = tempCanvas.toDataURL();
+      link.href = canvas.toDataURL();
       link.click();
     }
 
@@ -283,6 +239,5 @@
 
     setColor('white');
   </script>
-
 </body>
 </html>
