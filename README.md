@@ -59,6 +59,13 @@
 // কন্ডিশন ও লুপ দিয়ে কাজ করা যায়।
 // উদাহরণে দেখে নাও।
 ```
+```py
+//Block The Site Pop Up
+//Drawing Opens A New Tab
+আঁকো("আঁকার_বোর্ড");
+```
+
+
 
 >**```Examples```** - [**```উদাহরণ```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
 
