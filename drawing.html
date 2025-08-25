@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ম্যাজিক বোর্ড</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
+      overflow: hidden;
     }
 
     #board-container {
-      position: fixed;
-      top: 0;
-      left: 0;
       display: flex;
+      flex-direction: row;
       width: 100vw;
       height: 100vh;
       background-color: #000;
@@ -23,6 +23,7 @@
       flex: 1;
       background-color: black;
       cursor: crosshair;
+      display: block;
     }
 
     #controls {
@@ -52,10 +53,40 @@
       border: none;
       cursor: pointer;
       border-radius: 5px;
+      width: 100%;
     }
 
     button:hover {
       background-color: #666;
+    }
+
+    /* Responsive layout for mobile */
+    @media (max-width: 600px) {
+      #board-container {
+        flex-direction: column;
+      }
+
+      #controls {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 5px;
+      }
+
+      .color-dot {
+        width: 25px;
+        height: 25px;
+        margin: 5px;
+      }
+
+      button {
+        margin: 5px;
+        font-size: 14px;
+        padding: 6px 10px;
+        width: auto;
+      }
     }
   </style>
 </head>
@@ -86,8 +117,16 @@
   let currentColor = 'white';
 
   function resizeCanvas() {
-    canvas.width = window.innerWidth - 60; // space for controls
-    canvas.height = window.innerHeight;
+    const controls = document.getElementById('controls');
+    const isMobile = window.innerWidth <= 600;
+
+    if (isMobile) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight - controls.offsetHeight;
+    } else {
+      canvas.width = window.innerWidth - controls.offsetWidth;
+      canvas.height = window.innerHeight;
+    }
   }
 
   window.addEventListener('resize', resizeCanvas);
@@ -119,11 +158,11 @@
   }
 
   function getX(e) {
-    return e.touches ? e.touches[0].clientX : e.clientX;
+    return e.touches ? e.touches[0].clientX - canvas.getBoundingClientRect().left : e.clientX - canvas.getBoundingClientRect().left;
   }
 
   function getY(e) {
-    return e.touches ? e.touches[0].clientY : e.clientY;
+    return e.touches ? e.touches[0].clientY - canvas.getBoundingClientRect().top : e.clientY - canvas.getBoundingClientRect().top;
   }
 
   // Mouse events
