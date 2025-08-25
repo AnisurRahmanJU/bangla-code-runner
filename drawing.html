@@ -2,242 +2,535 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>আঁকার বোর্ড</title>
 
-  <!-- Bootstrap -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  
-  <!-- Cartoon Bangla Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap" rel="stylesheet" />
+  <!-- Google Fonts: Baloo 2 (cartoon-style Bengali) -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body, html {
+    /* Base font & background */
+    body {
       margin: 0;
-      padding: 0;
-      font-family: 'Baloo Da 2', cursive, sans-serif;
-      background-color: #001f3f;
-      color: white;
+      font-family: 'Baloo 2', cursive, sans-serif;
+      background-color: #001f3f; /* navy blue */
+      color: #ffde59;
       height: 100vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      /* SOFT FULL PAGE GLOW */
+      box-shadow:
+        inset 0 0 100px 50px rgba(255, 222, 89, 0.15),
+        0 0 60px 10px rgba(255, 222, 89, 0.1);
     }
 
+    /* HEADER */
     #header {
       background: linear-gradient(to right, #0d2b52, #103a6e);
       color: #ffde59;
       text-align: center;
-      padding: 14px;
-      font-size: 1.6rem;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      padding: 15px;
+      font-size: 1.8rem;
+      font-weight: 900;
+      box-shadow:
+        0 0 20px rgba(255, 222, 89, 0.3);
       flex-shrink: 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      text-shadow:
+        1.5px 1.5px 3px rgba(0, 0, 0, 0.6);
+      letter-spacing: 0.04em;
+      user-select: none;
     }
 
-    #drawingCanvas {
+    /* BOARD CONTAINER */
+    #board-container {
+      position: relative;
       flex: 1;
-      display: block;
-      width: 100%;
-      background-color: #001f3f;
-      touch-action: none;
-      cursor: crosshair;
-    }
-
-    #footer {
-      background-color: #0d2b52;
-      flex-shrink: 0;
-      padding: 10px 12px;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      overflow: hidden;
+      background-color: #001f3f;
+      border-radius: 12px; /* একটু বড় রেডিয়াস */
+      border: 3px solid red; /* লাল বর্ডার */
+      box-shadow:
+        0 0 40px 15px rgba(255, 222, 89, 0.1);
+      margin: 12px 20px;
+      transition: box-shadow 0.3s ease;
     }
 
+    #board-container:hover {
+      box-shadow:
+        0 0 60px 25px rgba(255, 222, 89, 0.2);
+    }
+
+    #bg-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      border-radius: 8px;
+      z-index: 0;
+      opacity: 0.35;
+      filter: drop-shadow(0 0 6px rgba(255, 222, 89, 0.2));
+      display: none;
+      transition: opacity 0.4s ease;
+    }
+
+    canvas {
+      flex: 1;
+      background-color: transparent;
+      cursor: crosshair;
+      display: block;
+      touch-action: none;
+      border-radius: 8px;
+      z-index: 1;
+      position: relative;
+      box-shadow:
+        0 0 20px 3px rgba(255, 222, 89, 0.15);
+      transition: box-shadow 0.3s ease;
+    }
+
+    canvas:focus {
+      outline: none;
+      box-shadow:
+        0 0 30px 6px rgba(255, 222, 89, 0.25);
+    }
+
+    /* FOOTER */
+    #footer {
+      background: #0d2b52;
+      padding: 10px 15px;
+      box-shadow:
+        0 -4px 15px rgba(255, 222, 89, 0.15);
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-shrink: 0;
+      user-select: auto;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    /* COLOR PALETTE */
     .color-palette {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      flex-wrap: nowrap;
+      gap: 12px;
+      scrollbar-width: thin;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-shrink: 0;
+    }
+
+    .color-palette::-webkit-scrollbar {
+      height: 6px;
+    }
+    .color-palette::-webkit-scrollbar-thumb {
+      background: rgba(255, 222, 89, 0.3);
+      border-radius: 3px;
     }
 
     .color-dot {
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      border: 2px solid white;
+      border: 2.5px solid white;
       cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 0 8px rgba(255, 222, 89, 0.1);
+      flex-shrink: 0;
+      user-select: none;
     }
 
-    .color-dot:hover {
-      transform: scale(1.2);
+    .color-dot:hover,
+    .color-dot.active {
+      transform: scale(1.3);
       border-color: #ffde59;
+      box-shadow:
+        0 0 15px 4px rgba(255, 222, 89, 0.35);
     }
 
-    .btn-group {
+    /* BUTTONS */
+    .btn-group-footer {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      gap: 14px;
+      flex-shrink: 0;
+      align-items: center;
     }
 
     .btn {
-      min-width: 100px;
+      font-weight: 700;
+      padding: 11px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(255, 222, 89, 0.15);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      user-select: none;
     }
 
-    @media (max-width: 576px) {
+    .btn-success {
+      background-color: #ffde59;
+      border: none;
+      color: #001f3f;
+      text-shadow: 0 0 3px #b49e10;
+      box-shadow:
+        0 0 12px 3px #ffde59aa;
+    }
+
+    .btn-success:hover {
+      background-color: #e6c549;
+      box-shadow:
+        0 0 18px 6px #fff763;
+      color: #001f3f;
+    }
+
+    .btn-warning {
+      background-color: #ffa500;
+      border: none;
+      color: #001f3f;
+      text-shadow: 0 0 3px #b47900;
+      box-shadow:
+        0 0 12px 3px #ffb84daa;
+    }
+
+    .btn-warning:hover {
+      background-color: #e59400;
+      box-shadow:
+        0 0 18px 6px #ffc94d;
+      color: #001f3f;
+    }
+
+    .btn-danger {
+      background-color: #ff5555;
+      border: none;
+      color: white;
+      text-shadow: 0 0 3px #b42929;
+      box-shadow:
+        0 0 12px 3px #ff7a7aaa;
+    }
+
+    .btn-danger:hover {
+      background-color: #cc4444;
+      box-shadow:
+        0 0 18px 6px #ff7777;
+    }
+
+    /* PENCIL SIZE SLIDER */
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffde59;
+      font-weight: 700;
+      flex-shrink: 0;
+      min-width: 150px;
+      user-select: none;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 110px;
+      height: 8px;
+      background: #103a6e;
+      border-radius: 6px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(255, 222, 89, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    input[type="range"]:hover {
+      box-shadow: 0 0 12px rgba(255, 222, 89, 0.4);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      background: #ffde59;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff76f;
+      border: 2px solid #b49e10;
+      transition: background 0.3s ease;
+    }
+    input[type="range"]:hover::-webkit-slider-thumb {
+      background: #fff763;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      background: #ffde59;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid #b49e10;
+      box-shadow: 0 0 10px #fff76f;
+      transition: background 0.3s ease;
+    }
+    input[type="range"]:hover::-moz-range-thumb {
+      background: #fff763;
+    }
+
+    /* FILE UPLOAD LABEL */
+    .file-upload-label {
+      background-color: #103a6e;
+      border-radius: 10px;
+      padding: 7px 14px;
+      color: #ffde59;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 0 6px rgba(255, 222, 89, 0.2);
+      user-select: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .file-upload-label:hover {
+      background-color: #1a4d95;
+      box-shadow: 0 0 12px rgba(255, 222, 89, 0.4);
+    }
+    input[type="file"] {
+      display: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #footer {
+        padding: 8px 10px;
+        gap: 10px;
+      }
+
       .color-dot {
-        width: 22px;
-        height: 22px;
+        width: 30px;
+        height: 30px;
       }
 
       .btn {
-        min-width: 90px;
-        font-size: 0.85rem;
-        padding: 6px 10px;
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+
+      .slider-container {
+        min-width: 120px;
       }
     }
   </style>
 </head>
 <body>
+  <header id="header">আঁকার বোর্ড</header>
 
-  <div id="header">ইচ্ছেমতো আঁকো, আঁকতে নেই বাধা</div>
-
-  <canvas id="drawingCanvas"></canvas>
-
-  <div id="footer">
-    <!-- Color Palette -->
-    <div class="color-palette">
-      <div class="color-dot" style="background: black;" onclick="setColor('black')"></div>
-      <div class="color-dot" style="background: red;" onclick="setColor('red')"></div>
-      <div class="color-dot" style="background: green;" onclick="setColor('green')"></div>
-      <div class="color-dot" style="background: blue;" onclick="setColor('blue')"></div>
-      <div class="color-dot" style="background: yellow;" onclick="setColor('yellow')"></div>
-      <div class="color-dot" style="background: white;" onclick="setColor('white')"></div>
-      <div class="color-dot" style="background: cyan;" onclick="setColor('cyan')"></div>
-      <div class="color-dot" style="background: orange;" onclick="setColor('orange')"></div>
-      <div class="color-dot" style="background: pink;" onclick="setColor('pink')"></div>
-      <div class="color-dot" style="background: lime;" onclick="setColor('lime')"></div>
-      <div class="color-dot" style="background: violet;" onclick="setColor('violet')"></div>
-      <div class="color-dot" style="background: gray;" onclick="setColor('gray')"></div>
-      <div class="color-dot" style="background: brown;" onclick="setColor('brown')"></div>
-    </div>
-
-    <!-- Buttons -->
-    <div class="btn-group">
-      <button class="btn btn-success btn-sm" onclick="promptAndSave()">সংরক্ষণ</button>
-      <button class="btn btn-warning btn-sm" onclick="clearBoard()">পরিষ্কার</button>
-      <button class="btn btn-danger btn-sm" onclick="closeTab()">বন্ধ করুন</button>
-    </div>
+  <div id="board-container">
+    <img id="bg-image" alt="Background Image" />
+    <canvas id="drawing-canvas" width="800" height="600" tabindex="0"></canvas>
   </div>
 
+  <footer id="footer">
+    <div class="color-palette" id="color-palette">
+      <!-- Color dots will be generated by JavaScript -->
+    </div>
+
+    <div class="btn-group-footer">
+      <label for="file-upload" class="file-upload-label" title="ব্যাকগ্রাউন্ড ছবি যোগ করুন">ছবি আপলোড</label>
+      <input type="file" id="file-upload" accept="image/*" />
+
+      <button id="undo-btn" class="btn btn-warning" title="Undo">Undo</button>
+      <button id="redo-btn" class="btn btn-warning" title="Redo">Redo</button>
+      <button id="clear-btn" class="btn btn-danger" title="Clear">Clear</button>
+    </div>
+
+    <div class="slider-container" title="কলমের আকার পরিবর্তন করুন">
+      <label for="pencil-size">পেন্সিল সাইজ:</label>
+      <input type="range" id="pencil-size" min="1" max="50" value="15" />
+    </div>
+  </footer>
+
   <script>
-    const canvas = document.getElementById('drawingCanvas');
+    // JavaScript for drawing, color palette, undo/redo, clear, background upload
+
+    const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
     let drawing = false;
-    let currentColor = 'white';
+    let currentColor = '#ffde59';
+    let pencilSize = 15;
+    const undoStack = [];
+    const redoStack = [];
+    const maxUndoStackSize = 30;
 
+    // Initialize canvas size to container size (responsive)
     function resizeCanvas() {
-      const header = document.getElementById('header');
-      const footer = document.getElementById('footer');
-      const height = window.innerHeight - header.offsetHeight - footer.offsetHeight;
-      canvas.width = window.innerWidth;
-      canvas.height = height;
-      ctx.fillStyle = '#001f3f';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const container = document.getElementById('board-container');
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      redraw();
     }
 
     window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('orientationchange', resizeCanvas);
-    window.addEventListener('load', resizeCanvas);
+    resizeCanvas();
 
-    function setColor(color) {
-      currentColor = color;
-    }
-
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      if (e.touches && e.touches.length > 0) {
-        return {
-          x: e.touches[0].clientX - rect.left,
-          y: e.touches[0].clientY - rect.top
-        };
-      }
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-    }
-
-    function startDraw(e) {
-      e.preventDefault();
+    // Drawing functions
+    function startDrawing(e) {
       drawing = true;
-      const pos = getPos(e);
       ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
+      ctx.lineWidth = pencilSize;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = currentColor;
+      ctx.moveTo(e.offsetX, e.offsetY);
     }
 
     function draw(e) {
       if (!drawing) return;
-      e.preventDefault();
-      const pos = getPos(e);
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.lineTo(pos.x, pos.y);
-      ctx.strokeStyle = currentColor;
+      ctx.lineTo(e.offsetX, e.offsetY);
       ctx.stroke();
     }
 
-    function stopDraw(e) {
-      if (!drawing) return;
-      e.preventDefault();
-      drawing = false;
-      ctx.beginPath();
-    }
-
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDraw);
-    canvas.addEventListener('mouseout', stopDraw);
-
-    canvas.addEventListener('touchstart', startDraw, { passive: false });
-    canvas.addEventListener('touchmove', draw, { passive: false });
-    canvas.addEventListener('touchend', stopDraw, { passive: false });
-
-    function clearBoard() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#001f3f';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function promptAndSave() {
-      let filename = prompt('আপনার ছবি ফাইলের নাম দিন:', 'আমার_ছবি.png');
-      if (!filename) return;
-      if (!filename.toLowerCase().endsWith('.png')) {
-        filename += '.png';
+    function stopDrawing() {
+      if (drawing) {
+        drawing = false;
+        ctx.closePath();
+        saveState();
       }
-      saveImage(filename);
     }
 
-    function saveImage(filename) {
-      const link = document.createElement('a');
-      link.download = filename;
-      link.href = canvas.toDataURL();
-      link.click();
+    // Save state for undo
+    function saveState() {
+      if (undoStack.length >= maxUndoStackSize) undoStack.shift();
+      undoStack.push(canvas.toDataURL());
+      redoStack.length = 0; // clear redoStack
     }
 
-    function closeTab() {
-      window.open('', '_self').close();
+    // Undo
+    document.getElementById('undo-btn').addEventListener('click', () => {
+      if (undoStack.length > 0) {
+        redoStack.push(canvas.toDataURL());
+        const lastState = undoStack.pop();
+        let img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = lastState;
+      }
+    });
+
+    // Redo
+    document.getElementById('redo-btn').addEventListener('click', () => {
+      if (redoStack.length > 0) {
+        undoStack.push(canvas.toDataURL());
+        const lastState = redoStack.pop();
+        let img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = lastState;
+      }
+    });
+
+    // Clear
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      saveState();
+      document.getElementById('bg-image').style.display = 'none';
+    });
+
+    // Pencil size change
+    document.getElementById('pencil-size').addEventListener('input', (e) => {
+      pencilSize = e.target.value;
+    });
+
+    // Color palette generation
+    const colors = ['#ffde59', '#ff5733', '#33ff57', '#3357ff', '#ff33a6', '#a633ff', '#33fff2', '#fff233'];
+    const paletteContainer = document.getElementById('color-palette');
+
+    colors.forEach((color, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('color-dot');
+      dot.style.backgroundColor = color;
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        currentColor = color;
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+      });
+      paletteContainer.appendChild(dot);
+    });
+
+    // Drawing events
+    canvas.addEventListener('mousedown', (e) => startDrawing(e));
+    canvas.addEventListener('mousemove', (e) => draw(e));
+    canvas.addEventListener('mouseup', () => stopDrawing());
+    canvas.addEventListener('mouseout', () => stopDrawing());
+
+    // Touch support
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const mouseEvent = new MouseEvent('mousedown', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+      });
+      canvas.dispatchEvent(mouseEvent);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const mouseEvent = new MouseEvent('mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+      });
+      canvas.dispatchEvent(mouseEvent);
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      const mouseEvent = new MouseEvent('mouseup', {});
+      canvas.dispatchEvent(mouseEvent);
+    });
+
+    // Save initial blank state
+    saveState();
+
+    // Redraw current canvas state from last undo state or blank
+    function redraw() {
+      if (undoStack.length > 0) {
+        let img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = undoStack[undoStack.length - 1];
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
     }
 
-    setColor('white');
+    // Background image upload
+    const bgImage = document.getElementById('bg-image');
+    const fileUpload = document.getElementById('file-upload');
+
+    fileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        bgImage.src = event.target.result;
+        bgImage.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
   </script>
 </body>
 </html>
