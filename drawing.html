@@ -139,7 +139,7 @@
 <body>
 
 <!-- Header on top of page -->
-<div id="header-text">ইচ্ছেমতো আঁকো</div>
+<div id="header-text">ইচ্ছেমতো আঁকো,<br>আঁকতে নেই বাধা</div>
 
 <!-- Main board container with canvas + controls -->
 <div id="board-container">
@@ -162,9 +162,9 @@
 
     <!-- 🧰 Buttons -->
     <div id="buttons-container">
-      <button class="btn btn-success btn-sm" onclick="promptAndSave()">&nbsp;Save&nbsp;</button>
-      <button class="btn btn-warning btn-sm" onclick="clearBoard()">&nbsp;Clear&nbsp;</button>
-      <button class="btn btn-danger btn-sm" onclick="closeTab()">&nbsp;Close&nbsp;</button>
+      <button class="btn btn-success btn-sm" onclick="promptAndSave()">&nbsp; Save &nbsp;</button>
+      <button class="btn btn-warning btn-sm" onclick="clearBoard()">&nbsp; Clear &nbsp;</button>
+      <button class="btn btn-danger btn-sm" onclick="closeTab()">&nbsp; Close &nbsp;</button>
     </div>
   </div>
 </div>
@@ -263,7 +263,7 @@
   }
 
   function promptAndSave() {
-    let filename = prompt('আপনার ছবি ফাইলের নাম দিন:', 'আঁকার_বোর্ড.png');
+    let filename = prompt('আপনার ছবি ফাইলের নাম দিন:', 'magic_board.png');
     if (!filename) return; // Cancelled or empty input
     if (!filename.toLowerCase().endsWith('.png')) {
       filename += '.png'; // Append .png if missing
