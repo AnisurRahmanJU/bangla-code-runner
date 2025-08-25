@@ -245,9 +245,18 @@ function drawShape(ctx, obj) {
       drawCar(ctx, x, y, size);
       break;
 
+    case 'আঁকার_বোর্ড':
+      drawBoard();
+      break;
+
+
     default:
       console.warn("অজানা আকৃতি:", shape);
   }
+}
+
+function drawBoard() {
+  window.open('drawing.html', '_blank');
 }
 
 
