@@ -16,12 +16,12 @@
 </head>
 <body>
 
-  <div class="container mt-5 shadow">
-    <h2 class="text-center mb-4">বাংলা কোড রানার</h2>
+  <div class="container">
+    <h2>বাংলা কোড রানার</h2>
 
+    <!-- কোড এডিটর -->
     <textarea
       id="banglaCode"
-      class="form-control mb-3"
       rows="10"
       placeholder="">
 ধরি নাম = ইনপুট("তোমার নাম কি?")
@@ -32,20 +32,26 @@
 } নাহলে {
 দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
 }</textarea>
-<div class="d-flex mb-3" >
-   <button onclick="runBanglaCode()" class="btn btn-success">রান করুন</button>
-   <button onclick="clearCode()" class="btn btn-danger">কোড মুছুন</button>
-</div>
 
-    <pre placeholder="" id="output"></pre>
-    
-   <div> 
-     <button onclick="clearOutput()" class="btn btn-danger">আউটপুট মুছুন</button>
-   </div><br>
-
+    <!-- রান এবং কোড মুছুন -->
     <div class="d-flex mb-3">
-      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples" target ="_blank"<button  class="btn btn-success">উদাহরণ</button></a>
-      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/blob/main/docs/%E0%A6%A1%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%B6%E0%A6%A8.md" target ="_blank"<button class="btn btn-success">ডকুমেন্টেশন</button></a>
+      <button onclick="runBanglaCode()" class="btn btn-success">রান করুন</button>
+      <button onclick="clearCode()" class="btn btn-danger">কোড মুছুন</button>
+    </div>
+
+    <!-- আউটপুট -->
+    <pre id="output"></pre>
+
+    <!-- রিলোড ও আউটপুট মুছুন -->
+    <div class="d-flex mb-3">
+      <button onclick="reloadPage()" class="btn btn-success">রিলোড পেইজ</button> 
+      <button onclick="clearOutput()" class="btn btn-danger">আউটপুট মুছুন</button>
+    </div>
+
+    <!-- উদাহরণ ও ডকুমেন্টেশন -->
+    <div class="d-flex mb-3">
+      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples" target="_blank" class="btn btn-success">উদাহরণ</a>
+      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/blob/main/docs/%E0%A6%A1%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%B6%E0%A6%A8.md" target="_blank" class="btn btn-success">ডকুমেন্টেশন</a>
     </div>
   </div>
 
@@ -57,6 +63,9 @@
     }
     function clearOutput() {
       document.getElementById('output').textContent = '';
+    }
+    function reloadPage() {
+      location.reload();
     }
   </script>
 </body>
