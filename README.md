@@ -62,7 +62,8 @@
 > `আঁকার_বোর্ড` ইচ্ছেমতো আঁকো, আঁকতে নেই বাধা।
 
 ```py
-//Block The Site Pop Up
+//if Doesn't Work, Click Reload Button
+// Code Again Please
 আঁকো("আঁকার_বোর্ড");
 ```
 
