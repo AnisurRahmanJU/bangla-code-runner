@@ -255,8 +255,14 @@ function drawShape(ctx, obj) {
   }
 }
 
+
+let boardOpened = false;  // ফ্ল্যাগ
+
 function drawBoard() {
-  window.open('drawing.html', '_blank');
+  if (!boardOpened) {
+    window.open('drawing.html', '_blank'); 
+    boardOpened = true;  // একবার খোলার পর আবার খোলবে না
+  }
 }
 
 
