@@ -74,6 +74,7 @@
 //if Doesn't Work, Click Reload Button
 // Code Again Please
 আঁকো("আঁকার_বোর্ড");
+// ইচ্ছেমতো আঁকো, আঁকতে নেই বাধা।
 ```
 
 <img src="drawing.jpg" >
