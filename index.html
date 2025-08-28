@@ -166,7 +166,7 @@
         if (stream.match(/^\/\/.*/)) return "comment-custom";
         if (stream.match(/^"(?:[^"\\]|\\.)*"/) || stream.match(/^'(?:[^'\\]|\\.)*'/)) return "string";
         if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\(/)) return "func-call";
-        if (stream.match(/^(ধরি|চলক)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
+        if (stream.match(/^(ধরি|চলক|সত্য|মিথ্যা|এবং|অথবা|সুইচ|কেস|ডিফল্ট|নাল|করো|থামো|বাদ|মধ্যে|ফাংশন|ফেরত|স্ট্রাক্ট|গণিত|পাই|লগ|লগ১০|বর্গমূল|ঘাত)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
         if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\{/)) return "keyword-custom";
 
         // Highlight only dot names
