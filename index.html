@@ -14,9 +14,6 @@
   <!-- CodeMirror CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css" />
-  
   <style>
     .CodeMirror {
       font-family: 'Noto Sans Bengali', sans-serif;
@@ -59,6 +56,11 @@
       color: #ef4444 !important;
     }
 
+    .cm-dotname {
+      color: #FFD700 !important; /* সোনালী রঙ */
+      font-weight: normal !important; /* bold নয় */
+    }
+
     #output {
       background-color: #0f172a;
       color: #f8fafc;
@@ -78,43 +80,32 @@
   <div class="container my-4">
     <h2>বাংলা কোড রানার</h2>
 
-    <!-- কোড এডিটর -->
-    <textarea
-      id="banglaCode"
-      rows="10"
-      placeholder="">
-// Input
-ধরি নাম = ইনপুট("তোমার নাম কি?")
+    <textarea id="banglaCode" rows="10">
+// অবজেক্ট উদাহরণ
+ব্যবহারকারী = {
+  নাম: "রাহিম",
+  বয়স: ২৫
+};
 
-// Condition
-যদি (নাম == "আনিছুর") {
-দেখাও("হ্যালো আনিছুর");
-} নাহলে যদি (নাম == "লিখন") {
-দেখাও("হ্যালো লিখন");
-} নাহলে {
-দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
-}
-</textarea>
+console.log(ব্যবহারকারী.নাম);
+console.log(ব্যবহারকারী.বয়স);
 
-    <!-- রান এবং কোড মুছুন -->
+// স্ট্রিং উদাহরণ
+টেক্সট = "হ্যালো";
+লম্বা = টেক্সট.দৈর্ঘ্য;
+console.log(লম্বা);
+    </textarea>
+
     <div class="d-flex gap-2 my-3">
       <button onclick="runBanglaCode()" class="btn btn-success">রান করুন</button>
       <button onclick="clearCode()" class="btn btn-danger">কোড মুছুন</button>
     </div>
 
-    <!-- আউটপুট -->
     <pre id="output"></pre>
 
-    <!-- রিলোড ও আউটপুট মুছুন -->
     <div class="d-flex gap-2 my-3">
       <button onclick="reloadPage()" class="btn btn-success">রিলোড পেইজ</button> 
       <button onclick="clearOutput()" class="btn btn-danger">আউটপুট মুছুন</button>
-    </div>
-
-    <!-- উদাহরণ ও ডকুমেন্টেশন -->
-    <div class="d-flex gap-2 my-3">
-      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples" target="_blank" class="btn btn-success">উদাহরণ</a>
-      <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/blob/main/docs/%E0%A6%A1%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%B6%E0%A6%A8.md" target="_blank" class="btn btn-success">ডকুমেন্টেশন</a>
     </div>
   </div>
 
@@ -132,7 +123,7 @@
       return text.replace(/[0-9]/g, d => engToBn[d]);
     }
 
-    // CodeMirror Custom Overlay
+    // CodeMirror Custom Overlay with dot name highlight only
     const customOverlay = {
       token: function(stream) {
         if (stream.match(/^\/\/.*/)) {
@@ -153,6 +144,15 @@
 
         if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\{/)) {
           return "keyword-custom";
+        }
+
+        // Highlight only the part after dot
+        if (stream.match(/^\.[\u0980-\u09FF\w]+/)) {
+          const current = stream.current();
+          stream.backUp(current.length - 1); // back to dot
+          stream.next(); // skip the dot
+          stream.eatWhile(/[\u0980-\u09FF\w]/); // read the name
+          return "dotname";
         }
 
         stream.next();
@@ -198,7 +198,7 @@
       const banglaCode = editor.getValue();
 
       try {
-        const jsCode = banglaToJS(banglaCode); // ✅ Your parser.js should define this
+        const jsCode = banglaToJS(banglaCode); // Your parser.js should define this
 
         window.alertAndOutput = function(msg) {
           const outputDiv = document.getElementById('output');
