@@ -28,8 +28,8 @@
       border-radius: 6px;
       padding: 10px;
       width: 100%;
-      height: 300px; /* ✅ Fixed height */
-      overflow-y: auto; /* ✅ Vertical scroll */
+      height: 300px;
+      overflow-y: auto;
     }
 
     .CodeMirror-focused {
@@ -85,14 +85,13 @@
       placeholder="">
 // এটা একটি মন্তব্য লিখি
 ধরি নাম = ইনপুট("তোমার নাম কি?")
-// নিচে শর্ত দেয়া হয়েছে
+ধরি বয়স = ইনপুট("তোমার বয়স কত?")
 যদি (নাম == "আনিছুর") {
-দেখাও("হ্যালো আনিছুর");
-} নাহলে যদি (নাম == "লিখন") {
-দেখাও("হ্যালো লিখন");
+দেখাও("হ্যালো আনিছুর, তুমি " + বয়স + " বছর বয়সী।");
 } নাহলে {
-দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
-}</textarea>
+দেখাও("তোমার নাম " + নাম + " এবং বয়স " + বয়স);
+}
+</textarea>
 
     <!-- রান এবং কোড মুছুন -->
     <div class="d-flex gap-2 my-3">
@@ -124,7 +123,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
 
   <script>
-    // Custom overlay for Bengali syntax
+    // English to Bengali number converter
+    function convertEnglishToBengaliNumbers(text) {
+      const engToBn = { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+      return text.replace(/[0-9]/g, d => engToBn[d]);
+    }
+
+    // CodeMirror Custom Overlay
     const customOverlay = {
       token: function(stream) {
         if (stream.match(/^\/\/.*/)) {
@@ -161,19 +166,22 @@
 
     editor.addOverlay(customOverlay);
 
+    // Output hijack with Bengali number conversion
     (function() {
       const outputDiv = document.getElementById('output');
       const oldLog = console.log;
       console.log = function(...args) {
         oldLog.apply(console, args);
         args.forEach(arg => {
+          let outputText = '';
           if (typeof arg === 'object') {
-            outputDiv.textContent += JSON.stringify(arg, null, 2) + '\n';
+            outputText = JSON.stringify(arg, null, 2);
           } else {
-            outputDiv.textContent += arg + ' ';
+            outputText = String(arg);
           }
+          outputText = convertEnglishToBengaliNumbers(outputText);
+          outputDiv.textContent += outputText + '\n';
         });
-        outputDiv.textContent += '\n';
         outputDiv.scrollTop = outputDiv.scrollHeight;
       };
     })();
@@ -184,12 +192,13 @@
       const banglaCode = editor.getValue();
 
       try {
-        const jsCode = banglaToJS(banglaCode); // ✅ uses your parser.js logic
+        const jsCode = banglaToJS(banglaCode); // ✅ your parser.js should define this
 
         window.alertAndOutput = function(msg) {
           const outputDiv = document.getElementById('output');
-          outputDiv.textContent += msg + '\n';
-          alert(msg);
+          const convertedMsg = convertEnglishToBengaliNumbers(msg);
+          outputDiv.textContent += convertedMsg + '\n';
+          alert(convertedMsg);
         };
 
         const func = new Function(jsCode);
@@ -197,7 +206,7 @@
 
       } catch (e) {
         const outputDiv = document.getElementById('output');
-        outputDiv.textContent = 'ত্রুটি: ' + e.message;
+        outputDiv.textContent = 'ত্রুটি: ' + convertEnglishToBengaliNumbers(e.message);
       }
     }
 
