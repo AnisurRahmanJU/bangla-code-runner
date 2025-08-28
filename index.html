@@ -164,7 +164,10 @@
       mode: { name: 'python' },
       lineNumbers: true,
       indentUnit: 4,
-      tabSize: 4
+      tabSize: 4,
+      lineNumberFormatter: function(line) {
+        return convertEnglishToBengaliNumbers(line.toString());
+      }
     });
 
     editor.addOverlay(customOverlay);
@@ -195,7 +198,7 @@
       const banglaCode = editor.getValue();
 
       try {
-        const jsCode = banglaToJS(banglaCode); // ✅ your parser.js should define this
+        const jsCode = banglaToJS(banglaCode); // ✅ Your parser.js should define this
 
         window.alertAndOutput = function(msg) {
           const outputDiv = document.getElementById('output');
