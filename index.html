@@ -6,17 +6,76 @@
   <title>বাংলা কোড রানার</title>
 
   <!-- Google Bengali Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet" />
 
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css" />
+  
+  <style>
+    .CodeMirror {
+      font-family: 'Noto Sans Bengali', sans-serif;
+      font-size: 1rem;
+      direction: ltr;
+      background-color: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 10px;
+      width: 100%;
+      height: 300px; /* ✅ Fixed height */
+      overflow-y: auto; /* ✅ Vertical scroll */
+    }
+
+    .CodeMirror-focused {
+      outline: none;
+      border-color: #0ea5e9;
+    }
+
+    .CodeMirror-gutters {
+      background-color: #1e293b;
+      color: #94a3b8;
+      border-right: 1px solid #334155;
+    }
+
+    .cm-string {
+      color: #f97316 !important;
+    }
+
+    .cm-func-call {
+      color: #3b82f6 !important;
+    }
+
+    .cm-keyword-custom {
+      color: #a855f7 !important;
+    }
+
+    .cm-comment-custom {
+      color: #ef4444 !important;
+    }
+
+    #output {
+      background-color: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 15px;
+      min-height: 150px;
+      white-space: pre-wrap;
+      margin-top: 10px;
+      font-family: 'Noto Sans Bengali', monospace;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="container my-4">
     <h2>বাংলা কোড রানার</h2>
 
     <!-- কোড এডিটর -->
@@ -24,17 +83,22 @@
       id="banglaCode"
       rows="10"
       placeholder="">
+// এটা একটি মন্তব্য
 ধরি নাম = ইনপুট("তোমার নাম কি?")
+// নিচে শর্ত দেয়া হয়েছে
 যদি (নাম == "আনিছুর") {
 দেখাও("হ্যালো আনিছুর");
 } নাহলে যদি (নাম == "লিখন") {
 দেখাও("হ্যালো লিখন");
 } নাহলে {
 দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
+}
+নতুনফাংশন {
+  দেখাও("এটা নতুন ফাংশন ব্লক!");
 }</textarea>
 
     <!-- রান এবং কোড মুছুন -->
-    <div class="d-flex mb-3">
+    <div class="d-flex gap-2 my-3">
       <button onclick="runBanglaCode()" class="btn btn-success">রান করুন</button>
       <button onclick="clearCode()" class="btn btn-danger">কোড মুছুন</button>
     </div>
@@ -43,27 +107,111 @@
     <pre id="output"></pre>
 
     <!-- রিলোড ও আউটপুট মুছুন -->
-    <div class="d-flex mb-3">
+    <div class="d-flex gap-2 my-3">
       <button onclick="reloadPage()" class="btn btn-success">রিলোড পেইজ</button> 
       <button onclick="clearOutput()" class="btn btn-danger">আউটপুট মুছুন</button>
     </div>
 
     <!-- উদাহরণ ও ডকুমেন্টেশন -->
-    <div class="d-flex mb-3">
+    <div class="d-flex gap-2 my-3">
       <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples" target="_blank" class="btn btn-success">উদাহরণ</a>
       <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/blob/main/docs/%E0%A6%A1%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%B6%E0%A6%A8.md" target="_blank" class="btn btn-success">ডকুমেন্টেশন</a>
     </div>
   </div>
 
-  <!-- Script -->
+  <!-- parser.js -->
   <script src="parser.js"></script>
+
+  <!-- CodeMirror JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+
   <script>
-    function clearCode() {
-      document.getElementById('banglaCode').value = '';
+    // Custom overlay for Bengali syntax
+    const customOverlay = {
+      token: function(stream) {
+        if (stream.match(/^\/\/.*/)) {
+          return "comment-custom";
+        }
+
+        if (stream.match(/^"(?:[^"\\]|\\.)*"/) || stream.match(/^'(?:[^'\\]|\\.)*'/)) {
+          return "string";
+        }
+
+        if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\(/)) {
+          return "func-call";
+        }
+
+        if (stream.match(/^(ধরি|চলক)(?![\u0980-\u09FF\w])/)) {
+          return "keyword-custom";
+        }
+
+        if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\{/)) {
+          return "keyword-custom";
+        }
+
+        stream.next();
+        return null;
+      }
+    };
+
+    const editor = CodeMirror.fromTextArea(document.getElementById('banglaCode'), {
+      mode: { name: 'python' },
+      lineNumbers: true,
+      indentUnit: 4,
+      tabSize: 4
+    });
+
+    editor.addOverlay(customOverlay);
+
+    (function() {
+      const outputDiv = document.getElementById('output');
+      const oldLog = console.log;
+      console.log = function(...args) {
+        oldLog.apply(console, args);
+        args.forEach(arg => {
+          if (typeof arg === 'object') {
+            outputDiv.textContent += JSON.stringify(arg, null, 2) + '\n';
+          } else {
+            outputDiv.textContent += arg + ' ';
+          }
+        });
+        outputDiv.textContent += '\n';
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+      };
+    })();
+
+    function runBanglaCode() {
+      clearOutput();
+
+      const banglaCode = editor.getValue();
+
+      try {
+        const jsCode = banglaToJS(banglaCode); // ✅ uses your parser.js logic
+
+        window.alertAndOutput = function(msg) {
+          const outputDiv = document.getElementById('output');
+          outputDiv.textContent += msg + '\n';
+          alert(msg);
+        };
+
+        const func = new Function(jsCode);
+        func();
+
+      } catch (e) {
+        const outputDiv = document.getElementById('output');
+        outputDiv.textContent = 'ত্রুটি: ' + e.message;
+      }
     }
+
+    function clearCode() {
+      editor.setValue('');
+    }
+
     function clearOutput() {
       document.getElementById('output').textContent = '';
     }
+
     function reloadPage() {
       location.reload();
     }
