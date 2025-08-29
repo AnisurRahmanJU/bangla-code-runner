@@ -2,7 +2,12 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>সাপ খেলা</title>
+
+  <!-- Bootstrap CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
     html, body {
       margin: 0;
@@ -18,6 +23,7 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
+      height: 100%;
     }
 
     #header {
@@ -43,14 +49,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      max-width: 800px;
     }
 
     canvas {
       background-color: #1e1e1e;
       border: 2px solid #444;
-      width: 80vw;
+      width: 100%;
       height: 60vh;
       display: block;
+      margin-bottom: 10px;
     }
 
     #controls {
@@ -126,16 +134,17 @@
   </style>
 </head>
 <body>
-  <div id="header">
+
+  <div id="header" class="container text-center mt-3">
     <div id="scoreBoard">স্কোর: 0</div>
     <h3>↔️↕️-Arrow ব্যবহার করে সাপ খেলা খেলো।</h3>
   </div>
 
   <div id="gameOver">গেম ওভার!</div>
-  <button id="restartBtn">আবার শুরু করুন</button>
+  <button id="restartBtn" class="btn btn-success" style="display: none;">আবার শুরু করুন</button>
 
   <div id="gameContainer">
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas" class="mx-auto"></canvas>
 
     <!-- Arrow controls BELOW canvas -->
     <div id="controls" class="hidden">
@@ -152,6 +161,9 @@
     </div>
   </div>
 
+  <!-- Bootstrap JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
@@ -161,19 +173,20 @@
     const controls = document.getElementById("controls");
 
     function resizeCanvas() {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
+      canvas.width = window.innerWidth * 0.8;
+      canvas.height = window.innerHeight * 0.6;
     }
+
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     const box = 20;
     let snake, direction, score, food, game;
 
-    const foodEmojis = ["🍎","🍌","🍒","🍓","🥝","🍇","🍍","🥭","🍉"];
+    const foodEmojis = ["🍎", "🍌", "🍒", "🍓", "🥝", "🍇", "🍍", "🥭", "🍉"];
 
     function initGame() {
-      snake = [{x: 9 * box, y: 10 * box}];
+      snake = [{ x: 9 * box, y: 10 * box }];
       direction = "RIGHT";
       score = 0;
       scoreBoard.innerText = "স্কোর: " + score;
@@ -191,7 +204,7 @@
       game = setInterval(drawGame, 150);
     }
 
-    document.addEventListener("keydown", function(e) {
+    document.addEventListener("keydown", function (e) {
       const key = e.key.toLowerCase();
       if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
       else if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
@@ -276,4 +289,3 @@
   </script>
 </body>
 </html>
-
