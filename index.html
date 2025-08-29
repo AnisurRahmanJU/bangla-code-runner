@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -9,109 +8,14 @@
   <!-- Google Bengali Font -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet" />
 
-  <!-- Bootstrap 5 CSS -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- CodeMirror CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
 
-  <style>
-    body {
-      background-color: #0f172a;
-      color: #f1f5f9;
-      font-family: 'Noto Sans Bengali', sans-serif;
-    }
-
-    .container {
-      background-color: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-      max-width: 800px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .btn-custom-blue {
-      background-color: #0ea5e9;
-      color: white;
-      border: none;
-    }
-
-    .btn-custom-blue:hover {
-      background-color: #0284c7;
-    }
-
-    .btn-custom-red {
-      background-color: #ef4444;
-      color: white;
-      border: none;
-    }
-
-    .btn-custom-red:hover {
-      background-color: #dc2626;
-    }
-
-    .CodeMirror {
-      font-family: 'Noto Sans Bengali', monospace;
-      font-size: 1rem;
-      direction: ltr;
-      background-color: #1e293b;
-      color: #f1f5f9;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      height: 300px;
-      overflow-y: auto;
-    }
-
-    .CodeMirror-focused {
-      outline: none;
-      border-color: #0ea5e9;
-    }
-
-    .CodeMirror-gutters {
-      background-color: #1e293b;
-      color: #94a3b8;
-      border-right: 1px solid #334155;
-    }
-
-    .cm-string {
-      color: #f97316 !important;
-    }
-
-    .cm-func-call {
-      color: #3b82f6 !important;
-    }
-
-    .cm-keyword-custom {
-      color: #a855f7 !important;
-    }
-
-    .cm-comment-custom {
-      color: #ef4444 !important;
-    }
-
-    .cm-dotname {
-      color: #FFD700 !important;
-      font-weight: normal !important;
-    }
-
-    #output {
-      background-color: #0f172a;
-      color: #f8fafc;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      padding: 15px;
-      min-height: 150px;
-      white-space: pre-wrap;
-      margin-top: 10px;
-      font-family: 'Noto Sans Bengali', monospace;
-      overflow-y: auto;
-    }
-  </style>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -119,14 +23,16 @@
     <h2>বাংলা কোড রানার</h2>
 
     <textarea id="banglaCode" rows="10">
-// ইনপুট ও কন্ডিশন
+// Input
 ধরি নাম = ইনপুট("তোমার নাম কি?")
+
+// Condition
 যদি (নাম == "আনিছুর") {
-  দেখাও("হ্যালো আনিছুর");
+দেখাও("হ্যালো আনিছুর");
 } নাহলে যদি (নাম == "লিখন") {
-  দেখাও("হ্যালো লিখন");
+দেখাও("হ্যালো লিখন");
 } নাহলে {
-  দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
+দেখাও("ঘোড়ার ডিম! তোমার নাম কি?");
 }
     </textarea>
 
@@ -141,7 +47,6 @@
       <button onclick="reloadPage()" class="btn btn-custom-blue flex-fill">রিলোড পেইজ</button>
       <button onclick="clearOutput()" class="btn btn-custom-red flex-fill">আউটপুট মুছুন</button>
     </div>
-
     <div class="d-flex gap-2 my-3">
       <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples" target="_blank" class="btn btn-custom-blue flex-fill">উদাহরণ</a>
       <a href="https://github.com/AnisurRahmanJU/bangla-code-runner/blob/main/docs/%E0%A6%A1%E0%A6%95%E0%A7%81%E0%A6%AE%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%B6%E0%A6%A8.md" target="_blank" class="btn btn-custom-blue flex-fill">ডকুমেন্টেশন</a>
@@ -161,22 +66,24 @@
       return text.replace(/[0-9]/g, d => engToBn[d]);
     }
 
+    function wrapBanglaDigits(text) {
+      return text.replace(/[০-৯]/g, digit => `<span class="bangla-number">${digit}</span>`);
+    }
+
     const customOverlay = {
       token: function(stream) {
         if (stream.match(/^\/\/.*/)) return "comment-custom";
         if (stream.match(/^"(?:[^"\\]|\\.)*"/) || stream.match(/^'(?:[^'\\]|\\.)*'/)) return "string";
-        if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\(/)) return "func-call";
-        if (stream.match(/^(ধরি|চলক|সত্য|মিথ্যা|এবং|অথবা|সুইচ|কেস|ডিফল্ট|নাল|করো|থামো|বাদ|মধ্যে|ফাংশন|ফেরত|স্ট্রাক্ট|গণিত|পাই|লগ|লগ১০|বর্গমূল|ঘাত)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
-        if (stream.match(/^([\w\u0980-\u09FF_]+(?:\s+[\w\u0980-\u09FF_]+)*)\s*\{/)) return "keyword-custom";
-
-        // Highlight only dot names
+        if (stream.match(/^(ফাংশন|ধরি|চলক|ধ্রুবক|যদি|নাহলে যদি|নাহলে|সত্য|মিথ্যা|এবং|অথবা|ফেরত|নাল|সুইচ|কেস|ডিফল্ট|লুপ|যতক্ষণ|করো|থামো|বাদ|মধ্যে)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
+        if (stream.match(/^([\u0980-\u09FF\w_]+)\s*\(/)) return "func-call";
         if (stream.match(/^\.[\u0980-\u09FF\w]+/)) {
           const current = stream.current();
           stream.backUp(current.length - 1);
-          stream.next(); // skip dot
+          stream.next();
           stream.eatWhile(/[\u0980-\u09FF\w]/);
           return "dotname";
         }
+        if (stream.match(/^[০-৯]+/)) return "bangla-number";
 
         stream.next();
         return null;
@@ -201,7 +108,7 @@
         args.forEach(arg => {
           let outputText = typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg);
           outputText = convertEnglishToBengaliNumbers(outputText);
-          outputDiv.textContent += outputText + '\n';
+          outputDiv.innerHTML += wrapBanglaDigits(outputText) + '\n';
         });
         outputDiv.scrollTop = outputDiv.scrollHeight;
       };
@@ -211,16 +118,17 @@
       clearOutput();
       const banglaCode = editor.getValue();
       try {
-        const jsCode = banglaToJS(banglaCode); // parser.js এ থাকা দরকার
+        const jsCode = banglaToJS(banglaCode); // Needs to exist in parser.js
         window.alertAndOutput = function(msg) {
           const outputDiv = document.getElementById('output');
           const convertedMsg = convertEnglishToBengaliNumbers(msg);
-          outputDiv.textContent += convertedMsg + '\n';
+          outputDiv.innerHTML += wrapBanglaDigits(convertedMsg) + '\n';
           alert(convertedMsg);
         };
         new Function(jsCode)();
       } catch (e) {
-        document.getElementById('output').textContent = 'ত্রুটি: ' + convertEnglishToBengaliNumbers(e.message);
+        const errorMsg = 'ত্রুটি: ' + convertEnglishToBengaliNumbers(e.message);
+        document.getElementById('output').innerHTML = wrapBanglaDigits(errorMsg);
       }
     }
 
@@ -229,12 +137,26 @@
     }
 
     function clearOutput() {
-      document.getElementById('output').textContent = '';
+      document.getElementById('output').innerHTML = '';
     }
 
     function reloadPage() {
       location.reload();
     }
+
+    // Optional: Wrap Bangla digits in other DOM text (outside CodeMirror)
+    document.addEventListener("DOMContentLoaded", () => {
+      function wrapAllBanglaDigits(node) {
+        if (node.nodeType === 3 && /[০-৯]/.test(node.nodeValue)) {
+          const span = document.createElement('span');
+          span.innerHTML = wrapBanglaDigits(node.nodeValue);
+          node.parentNode.replaceChild(span, node);
+        } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+          Array.from(node.childNodes).forEach(wrapAllBanglaDigits);
+        }
+      }
+      wrapAllBanglaDigits(document.body);
+    });
   </script>
 </body>
 </html>
