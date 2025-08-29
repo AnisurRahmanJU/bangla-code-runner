@@ -84,7 +84,7 @@ function banglaToJS(code) {
 
     // আঁকো 
     .replace(/আঁকো\s*\(/g, 'draw(')
-    .replace(/রং_করো\s*\(/g, '')
+    
 
     // সংখ্যা রূপান্তর (বাংলা → ইংরেজি)
     .replace(/[০১২৩৪৫৬৭৮৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d))
@@ -248,6 +248,10 @@ function drawShape(ctx, obj) {
     case 'আঁকার_বোর্ড':
       drawBoard();
       break;
+      
+    case 'সাপ_খেলা':
+            snakeGame();
+            break;
 
 
     default:
@@ -264,6 +268,17 @@ function drawBoard() {
     boardOpened = true;  // একবার খোলার পর আবার খোলবে না
   }
 }
+
+
+let boardOpened1 = false;  // ফ্ল্যাগ
+
+function snakeGame() {
+    if (!boardOpened1) {
+        window.open('snakegame.html', '_blank'); 
+        boardOpened1 = true;  // একবার খোলার পর আবার খোলবে না
+    }
+}
+
 
 
 function drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
