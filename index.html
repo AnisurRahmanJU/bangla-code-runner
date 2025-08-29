@@ -106,7 +106,17 @@
       console.log = function(...args) {
         oldLog.apply(console, args);
         args.forEach(arg => {
-          let outputText = typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg);
+          let outputText;
+
+          // Boolean হলে বাংলায় রূপান্তর
+          if (typeof arg === 'boolean') {
+            outputText = arg ? "সত্য" : "মিথ্যা";
+          } else if (typeof arg === 'object') {
+            outputText = JSON.stringify(arg, null, 2);
+          } else {
+            outputText = String(arg);
+          }
+
           outputText = convertEnglishToBengaliNumbers(outputText);
           outputDiv.innerHTML += wrapBanglaDigits(outputText) + '\n';
         });
