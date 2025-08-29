@@ -4,39 +4,95 @@
   <meta charset="UTF-8">
   <title>সাপ খেলা</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 0;
+      height: 100%;
       background-color: #121212;
       color: #fff;
       font-family: Arial, sans-serif;
-      overflow: hidden;
+    }
+
+    body {
+      display: flex;
       flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
-    canvas {
-      background-color: #1e1e1e;
-      border: 2px solid #444;
-      width: 80vw;
-      height: 80vh;
-      display: block;
-    }
+
     #header {
       text-align: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      padding-top: 10px;
     }
+
     #scoreBoard {
       font-size: 20px;
       margin-bottom: 5px;
     }
+
     #header h3 {
       margin: 0;
       font-size: 16px;
       color: #ccc;
     }
+
+    #gameContainer {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      background-color: #1e1e1e;
+      border: 2px solid #444;
+      width: 80vw;
+      height: 60vh;
+      display: block;
+    }
+
+    #controls {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #controls div {
+      display: flex;
+      justify-content: center;
+    }
+
+    .arrow-btn {
+      background-color: #333;
+      border: 2px solid #444;
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .arrow-btn:hover {
+      background-color: #555;
+    }
+
+    .arrow-btn:active {
+      background-color: #777;
+    }
+
+    .hidden {
+      display: none;
+    }
+
     #gameOver {
       position: absolute;
       top: 45%;
@@ -45,7 +101,9 @@
       font-size: 40px;
       color: red;
       display: none;
+      z-index: 1;
     }
+
     #restartBtn {
       position: absolute;
       top: 60%;
@@ -59,7 +117,9 @@
       border-radius: 5px;
       cursor: pointer;
       display: none;
+      z-index: 1;
     }
+
     #restartBtn:hover {
       background: #00994d;
     }
@@ -73,7 +133,24 @@
 
   <div id="gameOver">গেম ওভার!</div>
   <button id="restartBtn">আবার শুরু করুন</button>
-  <canvas id="gameCanvas"></canvas>
+
+  <div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Arrow controls BELOW canvas -->
+    <div id="controls" class="hidden">
+      <div>
+        <button class="arrow-btn" id="arrowUp">↑</button>
+      </div>
+      <div>
+        <button class="arrow-btn" id="arrowLeft">←</button>
+        <button class="arrow-btn" id="arrowRight">→</button>
+      </div>
+      <div>
+        <button class="arrow-btn" id="arrowDown">↓</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const canvas = document.getElementById("gameCanvas");
@@ -81,11 +158,11 @@
     const scoreBoard = document.getElementById("scoreBoard");
     const gameOverText = document.getElementById("gameOver");
     const restartBtn = document.getElementById("restartBtn");
+    const controls = document.getElementById("controls");
 
-    // Set canvas width and height dynamically based on 80% of viewport
     function resizeCanvas() {
-      canvas.width = window.innerWidth * 0.8;
-      canvas.height = window.innerHeight * 0.8;
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
@@ -95,7 +172,6 @@
 
     const foodEmojis = ["🍎","🍌","🍒","🍓","🥝","🍇","🍍","🥭","🍉"];
 
-    // গেম রিসেট করার ফাংশন
     function initGame() {
       snake = [{x: 9 * box, y: 10 * box}];
       direction = "RIGHT";
@@ -103,16 +179,18 @@
       scoreBoard.innerText = "স্কোর: " + score;
       gameOverText.style.display = "none";
       restartBtn.style.display = "none";
+      controls.classList.remove("hidden");
+
       food = {
-        x: Math.floor(Math.random() * Math.floor(canvas.width/box)) * box,
-        y: Math.floor(Math.random() * Math.floor(canvas.height/box)) * box,
+        x: Math.floor(Math.random() * Math.floor(canvas.width / box)) * box,
+        y: Math.floor(Math.random() * Math.floor(canvas.height / box)) * box,
         emoji: foodEmojis[Math.floor(Math.random() * foodEmojis.length)]
       };
+
       clearInterval(game);
       game = setInterval(drawGame, 150);
     }
 
-    // কিবোর্ড কন্ট্রোল
     document.addEventListener("keydown", function(e) {
       const key = e.key.toLowerCase();
       if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
@@ -121,21 +199,32 @@
       else if ((key === "arrowdown" || key === "x" || key === "s") && direction !== "UP") direction = "DOWN";
     });
 
+    // Touch arrow button controls
+    document.getElementById("arrowUp").addEventListener("click", () => {
+      if (direction !== "DOWN") direction = "UP";
+    });
+    document.getElementById("arrowLeft").addEventListener("click", () => {
+      if (direction !== "RIGHT") direction = "LEFT";
+    });
+    document.getElementById("arrowRight").addEventListener("click", () => {
+      if (direction !== "LEFT") direction = "RIGHT";
+    });
+    document.getElementById("arrowDown").addEventListener("click", () => {
+      if (direction !== "UP") direction = "DOWN";
+    });
+
     function drawGame() {
       ctx.fillStyle = "#1e1e1e";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // সাপ আঁকা
       for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = (i === 0) ? "#00ff00" : "#00aa00";
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
       }
 
-      // খাবার আঁকা (emoji)
       ctx.font = "20px Arial";
       ctx.fillText(food.emoji, food.x + 2, food.y + 18);
 
-      // সাপের মাথার অবস্থান
       let snakeX = snake[0].x;
       let snakeY = snake[0].y;
 
@@ -144,22 +233,20 @@
       if (direction === "RIGHT") snakeX += box;
       if (direction === "DOWN") snakeY += box;
 
-      // খাবার খাওয়া
       if (snakeX === food.x && snakeY === food.y) {
         score++;
         scoreBoard.innerText = "স্কোর: " + score;
         food = {
-          x: Math.floor(Math.random() * Math.floor(canvas.width/box)) * box,
-          y: Math.floor(Math.random() * Math.floor(canvas.height/box)) * box,
+          x: Math.floor(Math.random() * Math.floor(canvas.width / box)) * box,
+          y: Math.floor(Math.random() * Math.floor(canvas.height / box)) * box,
           emoji: foodEmojis[Math.floor(Math.random() * foodEmojis.length)]
         };
       } else {
-        snake.pop(); // খাবার না খেলে tail কেটে দিবে
+        snake.pop();
       }
 
-      const newHead = {x: snakeX, y: snakeY};
+      const newHead = { x: snakeX, y: snakeY };
 
-      // গেম ওভার কন্ডিশন
       if (
         snakeX < 0 || snakeY < 0 ||
         snakeX >= canvas.width || snakeY >= canvas.height ||
@@ -168,12 +255,12 @@
         clearInterval(game);
         gameOverText.style.display = "block";
         restartBtn.style.display = "block";
+        controls.classList.add("hidden");
       }
 
       snake.unshift(newHead);
     }
 
-    // সাপ নিজের শরীরের সাথে ধাক্কা খেলে
     function collision(head, array) {
       for (let i = 0; i < array.length; i++) {
         if (head.x === array[i].x && head.y === array[i].y) {
@@ -183,10 +270,8 @@
       return false;
     }
 
-    // Restart button
     restartBtn.addEventListener("click", initGame);
 
-    // প্রথমবার গেম চালু
     initGame();
   </script>
 </body>
