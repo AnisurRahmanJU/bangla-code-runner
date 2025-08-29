@@ -78,5 +78,11 @@
 <img src="drawing.jpg" >
 
 
+## `সাপ খেলা`
+```py
+আঁকো("সাপ_খেলা");
+//↕️↔️ Arrow ব্যবহার করে সাপ খেলা খেলো
+```
+
 >**```Examples```** - [**```উদাহরণ```**](https://github.com/AnisurRahmanJU/bangla-code-runner/tree/main/examples)
 
