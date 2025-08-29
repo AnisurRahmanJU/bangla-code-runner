@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake Game</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    canvas {
+      background-color: #1e1e1e;
+      border: 2px solid #444;
+      width: 80vw;
+      height: 80vh;
+      display: block;
+    }
+    #scoreBoard {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
+    #gameOver {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      color: red;
+      display: none;
+    }
+    #restartBtn {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      background: #00cc66;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+    }
+    #restartBtn:hover {
+      background: #00994d;
+    }
+  </style>
+</head>
+<body>
+  <div id="scoreBoard">স্কোর: 0</div>
+  <div id="gameOver">গেম ওভার!</div>
+  <button id="restartBtn">আবার শুরু করুন</button>
+  <canvas id="gameCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreBoard = document.getElementById("scoreBoard");
+    const gameOverText = document.getElementById("gameOver");
+    const restartBtn = document.getElementById("restartBtn");
+
+    // Set canvas width and height dynamically based on 80% of viewport
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * 0.8;
+      canvas.height = window.innerHeight * 0.8;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const box = 20;
+    let snake, direction, score, food, game;
+
+    const foodEmojis = ["🍎","🍌","🍒","🍓","🥝","🍇","🍍","🥭","🍉"];
+
+    // গেম রিসেট করার ফাংশন
+    function initGame() {
+      snake = [{x: 9 * box, y: 10 * box}];
+      direction = "RIGHT";
+      score = 0;
+      scoreBoard.innerText = "স্কোর: " + score;
+      gameOverText.style.display = "none";
+      restartBtn.style.display = "none";
+      food = {
+        x: Math.floor(Math.random() * Math.floor(canvas.width/box)) * box,
+        y: Math.floor(Math.random() * Math.floor(canvas.height/box)) * box,
+        emoji: foodEmojis[Math.floor(Math.random() * foodEmojis.length)]
+      };
+      clearInterval(game);
+      game = setInterval(drawGame, 150);
+    }
+
+    // কিবোর্ড কন্ট্রোল
+    document.addEventListener("keydown", function(e) {
+      const key = e.key.toLowerCase();
+      if ((key === "arrowleft" || key === "a") && direction !== "RIGHT") direction = "LEFT";
+      else if ((key === "arrowup" || key === "w") && direction !== "DOWN") direction = "UP";
+      else if ((key === "arrowright" || key === "d") && direction !== "LEFT") direction = "RIGHT";
+      else if ((key === "arrowdown" || key === "x" || key === "s") && direction !== "UP") direction = "DOWN";
+    });
+
+    function drawGame() {
+      ctx.fillStyle = "#1e1e1e";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // সাপ আঁকা
+      for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = (i === 0) ? "#00ff00" : "#00aa00";
+        ctx.fillRect(snake[i].x, snake[i].y, box, box);
+      }
+
+      // খাবার আঁকা (emoji)
+      ctx.font = "20px Arial";
+      ctx.fillText(food.emoji, food.x + 2, food.y + 18);
+
+      // সাপের মাথার অবস্থান
+      let snakeX = snake[0].x;
+      let snakeY = snake[0].y;
+
+      if (direction === "LEFT") snakeX -= box;
+      if (direction === "UP") snakeY -= box;
+      if (direction === "RIGHT") snakeX += box;
+      if (direction === "DOWN") snakeY += box;
+
+      // খাবার খাওয়া
+      if (snakeX === food.x && snakeY === food.y) {
+        score++;
+        scoreBoard.innerText = "স্কোর: " + score;
+        food = {
+          x: Math.floor(Math.random() * Math.floor(canvas.width/box)) * box,
+          y: Math.floor(Math.random() * Math.floor(canvas.height/box)) * box,
+          emoji: foodEmojis[Math.floor(Math.random() * foodEmojis.length)]
+        };
+      } else {
+        snake.pop(); // খাবার না খেলে tail কেটে দিবে
+      }
+
+      const newHead = {x: snakeX, y: snakeY};
+
+      // গেম ওভার কন্ডিশন
+      if (
+        snakeX < 0 || snakeY < 0 ||
+        snakeX >= canvas.width || snakeY >= canvas.height ||
+        collision(newHead, snake)
+      ) {
+        clearInterval(game);
+        gameOverText.style.display = "block";
+        restartBtn.style.display = "block";
+      }
+
+      snake.unshift(newHead);
+    }
+
+    // সাপ নিজের শরীরের সাথে ধাক্কা খেলে
+    function collision(head, array) {
+      for (let i = 0; i < array.length; i++) {
+        if (head.x === array[i].x && head.y === array[i].y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Restart button
+    restartBtn.addEventListener("click", initGame);
+
+    // প্রথমবার গেম চালু
+    initGame();
+  </script>
+</body>
+</html>
