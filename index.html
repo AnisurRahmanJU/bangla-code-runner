@@ -74,7 +74,7 @@
       token: function(stream) {
         if (stream.match(/^\/\/.*/)) return "comment-custom";
         if (stream.match(/^"(?:[^"\\]|\\.)*"/) || stream.match(/^'(?:[^'\\]|\\.)*'/)) return "string";
-        if (stream.match(/^(ফাংশন|ধরি|চলক|ধ্রুবক|যদি|নাহলে যদি|নাহলে|সত্য|মিথ্যা|এবং|অথবা|ফেরত|নাল|সুইচ|কেস|ডিফল্ট|লুপ|যতক্ষণ|করো|থামো|বাদ|মধ্যে)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
+        if (stream.match(/^(ধরি|চলক|ধ্রুবক|যদি|নাহলে যদি|নাহলে|সত্য|মিথ্যা|এবং|অথবা|ফেরত|নাল|সুইচ|কেস|ডিফল্ট|লুপ|যতক্ষণ|করো|থামো|বাদ|মধ্যে|ফাংশন|স্ট্রাক্ট)(?![\u0980-\u09FF\w])/)) return "keyword-custom";
         if (stream.match(/^([\u0980-\u09FF\w_]+)\s*\(/)) return "func-call";
         if (stream.match(/^\.[\u0980-\u09FF\w]+/)) {
           const current = stream.current();
