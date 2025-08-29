@@ -111,9 +111,12 @@
           // Boolean হলে বাংলায় রূপান্তর
           if (typeof arg === 'boolean') {
             outputText = arg ? "সত্য" : "মিথ্যা";
-          } else if (typeof arg === 'object') {
-            outputText = JSON.stringify(arg, null, 2);
-          } else {
+          } 
+          // Array বা Object হলে এক লাইনে stringify
+          else if (typeof arg === 'object') {
+            outputText = JSON.stringify(arg);
+          } 
+          else {
             outputText = String(arg);
           }
 
