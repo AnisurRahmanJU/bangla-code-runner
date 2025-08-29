@@ -14,6 +14,7 @@
       color: #fff;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      flex-direction: column;
     }
     canvas {
       background-color: #1e1e1e;
@@ -22,12 +23,19 @@
       height: 80vh;
       display: block;
     }
+    #header {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
     #scoreBoard {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 20px;
+      margin-bottom: 5px;
+    }
+    #header h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #ccc;
     }
     #gameOver {
       position: absolute;
@@ -58,8 +66,11 @@
   </style>
 </head>
 <body>
-  <div><center><h3>↔️↕️-Arrow ব্যবহার করে সাপ খেলা খেলো। </h3></center></div>
-  <div id="scoreBoard">স্কোর: 0 </div>
+  <div id="header">
+    <div id="scoreBoard">স্কোর: 0</div>
+    <h3>↔️↕️-Arrow ব্যবহার করে সাপ খেলা খেলো।</h3>
+  </div>
+
   <div id="gameOver">গেম ওভার!</div>
   <button id="restartBtn">আবার শুরু করুন</button>
   <canvas id="gameCanvas"></canvas>
@@ -178,5 +189,6 @@
     // প্রথমবার গেম চালু
     initGame();
   </script>
-  </body>
+</body>
 </html>
+
