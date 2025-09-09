@@ -80,7 +80,7 @@ function banglaToJS(code) {
     .replace(/পরম_মান/g, 'abs')
     .replace(/ন্যূনতম/g, 'min')
     .replace(/সর্বাধিক/g, 'max')
-    .replace(/র‌্যান্ডম/g, 'random')
+    .replace(/রান্ডম/g, 'random')
 
     // আঁকো 
     .replace(/আঁকো\s*\(/g, 'draw(')
