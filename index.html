@@ -16,6 +16,17 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Inline Styles for Highlighting -->
+  <style>
+    .cm-bangla-number {
+      color: #32CD32; /* Lime Green for Bangla numbers */
+      font-weight: bold;
+    }
+    .cm-dotname {
+      color: #FFD700; /* Yellow for object access via dot */
+    }
+  </style>
 </head>
 <body>
 
@@ -83,7 +94,9 @@
           stream.eatWhile(/[\u0980-\u09FF\w]/);
           return "dotname";
         }
-        if (stream.match(/^[০-৯]+/)) return "bangla-number";
+
+        // ✅ Bangla number with optional decimal part
+        if (stream.match(/^[০-৯]+(\.[০-৯]+)?/)) return "bangla-number";
 
         stream.next();
         return null;
@@ -108,15 +121,11 @@
         args.forEach(arg => {
           let outputText;
 
-          // Boolean হলে বাংলায় রূপান্তর
           if (typeof arg === 'boolean') {
             outputText = arg ? "সত্য" : "মিথ্যা";
-          } 
-          // Array বা Object হলে এক লাইনে stringify
-          else if (typeof arg === 'object') {
+          } else if (typeof arg === 'object') {
             outputText = JSON.stringify(arg);
-          } 
-          else {
+          } else {
             outputText = String(arg);
           }
 
@@ -131,7 +140,7 @@
       clearOutput();
       const banglaCode = editor.getValue();
       try {
-        const jsCode = banglaToJS(banglaCode); // Needs to exist in parser.js
+        const jsCode = banglaToJS(banglaCode); // Assumes parser.js provides this
         window.alertAndOutput = function(msg) {
           const outputDiv = document.getElementById('output');
           const convertedMsg = convertEnglishToBengaliNumbers(msg);
@@ -157,7 +166,6 @@
       location.reload();
     }
 
-    // Optional: Wrap Bangla digits in other DOM text (outside CodeMirror)
     document.addEventListener("DOMContentLoaded", () => {
       function wrapAllBanglaDigits(node) {
         if (node.nodeType === 3 && /[০-৯]/.test(node.nodeValue)) {
