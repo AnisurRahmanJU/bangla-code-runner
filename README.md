@@ -6,9 +6,8 @@
 <img src="bncoderun.PNG" >
 
 
-> **```News-1```** - [**```Programming24 School```**](https://programming24.school.blog/%e0%a6%ac%e0%a6%be%e0%a6%82%e0%a6%b2%e0%a6%be-%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%97%e0%a7%8d%e0%a6%b0%e0%a6%be%e0%a6%ae%e0%a6%bf%e0%a6%82-%e0%a6%ad%e0%a6%be%e0%a6%b7%e0%a6%be/)
+> **```News```** - [**```Programming24 School```**](https://programming24.school.blog/%e0%a6%ac%e0%a6%be%e0%a6%82%e0%a6%b2%e0%a6%be-%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%97%e0%a7%8d%e0%a6%b0%e0%a6%be%e0%a6%ae%e0%a6%bf%e0%a6%82-%e0%a6%ad%e0%a6%be%e0%a6%b7%e0%a6%be/)
 
-> **```News-2```** - [**```Programming24 School```**](https://wordpress.com/reader/feeds/151116778/posts/5781512194)
 
 > **```লাইভ পেইজ```** -
 [**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
