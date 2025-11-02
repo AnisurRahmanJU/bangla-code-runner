@@ -532,24 +532,28 @@ function runBanglaCode() {
   console.log = originalConsoleLog;
   */
 
-try {
+ try {
   eval(jsCode);
 } catch (e) {
+  console.log(e.name, e.message); // ডিবাগিংয়ের জন্য
+
   let msg = e.message;
 
-  // বাংলা অনুবাদ নির্ধারণ
   if (msg.includes("Unexpected token")) {
-    // যেমন: Unexpected token '}'
-    msg = msg.replace("Unexpected token", "অপ্রত্যাশিত ভুল হয়েছে");
+    msg = msg.replace("Unexpected token", "অপ্রত্যাশিত কিছু পাওয়া গেছে");
+  } else if (msg.includes("Unexpected identifier")) {
+    msg = msg.replace("Unexpected identifier", "অপ্রত্যাশিত কিছু ভুল হয়েছে");
   } else if (msg.includes("is not defined")) {
-    // যেমন: 'x' is not defined
-    msg = msg.replace("is not defined", "ডিফাইন করা হয়নি");
+    msg = msg.replace("is not defined", "সংজ্ঞায়িত করা হয়নি");
+  } else if (msg.includes("missing")) {
+    msg = msg.replace("missing", "অনুপস্থিত");
+  } else if (msg.includes("Unexpected end of input")) {
+    msg = "কোড অসম্পূর্ণ — ইনপুট পাওয়া যায়নি";
   }
 
   outputDiv.textContent = 'ত্রুটি: ' + msg;
 }
 
-// কনসোল লগ রিসেট করা
 console.log = originalConsoleLog;
   
-
+}
