@@ -523,37 +523,12 @@ function runBanglaCode() {
     originalConsoleLog.apply(console, args);
   };
 
-  /*try {
+  try {
     eval(jsCode);
   } catch (e) {
     outputDiv.textContent = 'ত্রুটি: ' + e.message;
   }
 
   console.log = originalConsoleLog;
-  */
-
- try {
-  eval(jsCode);
-} catch (e) {
-  console.log(e.name, e.message); // ডিবাগিংয়ের জন্য
-
-  let msg = e.message;
-
-  if (msg.includes("Unexpected token")) {
-    msg = msg.replace("Unexpected token", "অপ্রত্যাশিত কিছু পাওয়া গেছে");
-  } else if (msg.includes("Unexpected identifier")) {
-    msg = msg.replace("Unexpected identifier", "অপ্রত্যাশিত কিছু ভুল হয়েছে");
-  } else if (msg.includes("is not defined")) {
-    msg = msg.replace("is not defined", "সংজ্ঞায়িত করা হয়নি");
-  } else if (msg.includes("missing")) {
-    msg = msg.replace("missing", "অনুপস্থিত");
-  } else if (msg.includes("Unexpected end of input")) {
-    msg = "কোড অসম্পূর্ণ — ইনপুট পাওয়া যায়নি";
-  }
-
-  outputDiv.textContent = 'ত্রুটি: ' + msg;
-}
-
-console.log = originalConsoleLog;
   
 }
