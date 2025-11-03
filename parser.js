@@ -25,6 +25,7 @@ function banglaToJS(code) {
     .replace(/থামো/g, 'break')
     .replace(/বাদ/g, 'continue')
     .replace(/মধ্যে/g, 'in')
+    .replace(/\ন/g, '\n')
 
     // ফাংশন
     .replace(/ফাংশন/g, 'function')
