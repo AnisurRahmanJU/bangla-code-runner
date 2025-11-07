@@ -1,6 +1,7 @@
 {
   "name": "@anisurrahmanju/bangla-code-runner",
-  "version": "1.0.0",
+  "version": "4.5.0",
+  "release": "First released 2020, version - 1.1.0"
   "description": "A Bangla programming language code runner with syntax highlighting, real output, and step-by-step execution.",
   "main": "index.js",
   "scripts": {
