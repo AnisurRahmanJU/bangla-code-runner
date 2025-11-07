@@ -1,16 +1,12 @@
 # বাংলা কোড রানার
 **`বাংলা কোড রানার`** একটি অনলাইন অ্যাডভান্সড বাংলা কোডিং প্ল্যাটফর্ম যা ব্যবহারকারীদের বাংলা কোড রান এবং টেস্ট করার সুযোগ দেয়। এটি ছোটদের জন্য মজার টুল যা বাংলা কোড লেখা, রান করা এবং ছবি আঁকা যায়।
-## সংস্করণ: ৪.২ ভার্সন
+## সংস্করণ: ৪.৫ ভার্সন
 ---
 
 <img src="bncoderun.PNG" >
 
 
 > **```News```** - [**```Programming24 School```**](https://programming24.school.blog/2025/08/26/bangla-code-runner-version-4-1-released)
-
-
-> **```লাইভ পেইজ```** -
-[**```Try it out```**](https://anisurrahmanju.github.io/bangla-code-runner/)
 
 > [```পতাকা();```](https://github.com/ikrum/potaka) ```থেকে অনুপ্রাণিত।```
 
