@@ -235,21 +235,3 @@ body {
 
 }
 
-
-/* ===== Mobile Button Fix (Right aligned, same size) ===== */
-/* ===== Mobile: Only Clear Button নিচে যাবে ===== */
-@media screen and (max-width: 992px) {
-
-    .action-container {
-        flex-wrap: wrap;
-        justify-content: flex-end; /* right align */
-    }
-
-    .btn-clear-code {
-        flex-basis: 100%;   /* নতুন লাইনে যাবে */
-        margin-top: 6px;
-        display: flex;
-        justify-content: flex-end; /* ডান পাশে থাকবে */
-    }
-
-}
