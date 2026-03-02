@@ -248,4 +248,5 @@ body {
 .btn-clear-code {
     position: relative;
     top: 3px; /* move vertically down 3px; adjust as needed */
+    align-item:right;
 }
