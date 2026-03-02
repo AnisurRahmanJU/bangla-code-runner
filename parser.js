@@ -470,6 +470,14 @@ function compare(str1, str2) {
   }
 }
 
+// বুলিয়ান
+function convertBoolToBangla(text) {
+  if (text === true) return 'সত্য';
+  if (text === false) return 'মিথ্যা';
+  return text;
+}
+
+
 // কথাবলো ফাংশন
 function কথা_বলো(str) {
   speakText(str);
