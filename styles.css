@@ -235,16 +235,9 @@ body {
 
 }
 
-/* ===== Responsive Button Layout ===== */
 
-/* Desktop → পাশাপাশি থাকবে */
-.action-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
+/* ===== Mobile Button Fix (Right aligned, same size) ===== */
 
-/* Mobile → নিচে চলে যাবে */
 @media screen and (max-width: 992px) {
 
     .topbar {
@@ -253,21 +246,27 @@ body {
         padding: 8px 12px;
     }
 
+    /* Topbar right section নিচে যাবে */
     .topbar .d-flex:last-child {
         width: 100%;
         margin-top: 8px;
+        display: flex;
         flex-direction: column;
-        align-items: stretch;
-    }
-
-    .action-container {
-        width: 100%;
-        flex-direction: column;
+        align-items: flex-end;   /* 👉 Right side */
         gap: 8px;
     }
 
+    /* Button container column হবে */
+    .action-container {
+        flex-direction: column;
+        align-items: flex-end;   /* 👉 Right aligned */
+        gap: 8px;
+    }
+
+    /* Important: full width না */
     .action-container .btn-ide {
-        width: 100%;
+        width: auto;
+        min-width: 120px; /* desktop এর মতো */
     }
 
 }
