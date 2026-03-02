@@ -235,14 +235,17 @@ body {
 
 }
 
-/* Default: Desktop - show button */
-.btn-clear-code {
-    display: inline-flex; /* or inline-block/flex depending on your layout */
+/* Make the topbar buttons container relative */
+.topbar .action-container {
+    display: flex;
+    align-items: center;       /* vertically center items */
+    justify-content: flex-end; /* push buttons to the right */
+    gap: 10px;                 /* space between buttons */
+    position: relative;
 }
 
-/* Mobile: Hide button on screens <= 992px */
-@media screen and (max-width: 992px) {
-    .btn-clear-code {
-        display: none !important;
-    }
+/* Optionally move the "কোড মুছুন" button slightly down */
+.btn-clear-code {
+    position: relative;
+    top: 3px; /* move vertically down 3px; adjust as needed */
 }
