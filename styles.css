@@ -1,101 +1,101 @@
 body {
-  background-color: #0f172a;
-  color: #f1f5f9;
-  font-family: 'Hind Siliguri';
+    margin: 0;
+    font-family: 'Hind Siliguri', sans-serif;
+    background: #0f172a;
+    color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.container {
-  background-color: #1e293b;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  max-width: 800px;
+.topbar {
+    height: 55px;
+    background: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #334155;
+    z-index: 1001;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.action-icons { display: flex; gap: 20px; margin-right: 15px; }
+.action-icons i {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #94a3b8;
+    transition: 0.2s;
+    padding: 5px;
+}
+.action-icons i:hover { color: #38bdf8; transform: scale(1.1); }
+
+.layout { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+/* Sidebar Styling */
+.sidebar {
+    width: 240px;
+    background: #111827;
+    border-right: 1px solid #1f2937;
+    padding: 20px 15px;
+    flex-shrink: 0;
 }
 
-.btn-custom-blue {
-  background-color: #0ea5e9;
-  color: white;
-  border: none;
+.sidebar-title { color: #64748b; font-size: 12px; margin-bottom: 15px; text-transform: uppercase; }
+
+.file-upload-box {
+    background: #1e293b;
+    border: 1px dashed #334155;
+    color: #94a3b8;
+    padding: 15px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s;
+}
+.file-upload-box:hover { border-color: #38bdf8; color: #38bdf8; background: #0f172a; }
+
+.filename-input {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #38bdf8;
+    border-radius: 4px;
+    padding: 6px 12px;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
 }
 
-.btn-custom-blue:hover {
-  background-color: #0284c7;
+.github-link { color: #94a3b8; font-size: 13px; cursor: pointer; margin-top: 20px; }
+
+/* Editor & Console */
+.main { flex: 1; display: flex; flex-direction: column; background: #272822; position: relative; }
+#editorSection { flex: 1; position: relative; overflow: hidden; }
+
+.CodeMirror { 
+    height: 100% !important; 
+    font-family: 'Hind Siliguri', 'Consolas', monospace !important; 
+    font-size: 18px; 
+    background: #1e293b !important; 
 }
 
-.btn-custom-red {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-}
+/* Color Highlighting */
+.cm-bangla-number { color: #32CD32 !important; font-weight: bold; }
+.cm-dotname { color: #FFD700 !important; }
+.cm-keyword-custom { color: #c678dd !important; font-weight: bold; }
+.cm-comment-custom { color: #ff3344 !important; }
+.cm-func-call { color: #61afef !important; }
+.cm-string { color: #e06c75 !important; }
 
-.btn-custom-red:hover {
-  background-color: #dc2626;
-}
+#resizer { height: 8px; background: #1e293b; cursor: ns-resize; z-index: 100; border-top: 1px solid #334155; }
+#consoleSection { height: 180px; background: #010409; display: flex; flex-direction: column; min-height: 40px; }
+.console-header { padding: 8px 15px; background: #161b22; display: flex; justify-content: space-between; align-items: center; }
+.console-output { flex: 1; padding: 15px; overflow: auto; color: #e6edf3; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 14px; }
 
-.CodeMirror {
-  font-family: 'Hind Siliguri';
-  font-size: 1rem;
-  direction: ltr;
-  background-color: #1e293b;
-  color: #f1f5f9;
-  border: 1px solid #334155;
-  border-radius: 6px;
-  height: 300px;
-  overflow-y: auto;
-}
+.btn-ide { height: 32px; padding: 0 12px; border-radius: 4px; font-size: 12px; border: none; cursor: pointer; font-weight: 600; }
+.btn-run { background: #238636; color: white; height: 36px; }
+.btn-danger { background: #dc3545; color: white; }
+.btn-toggle { background: transparent; color: #8b949e; border: 1px solid #30363d; width: 32px; justify-content: center; }
 
-.CodeMirror-focused {
-  outline: none;
-  border-color: #0ea5e9;
-}
-
-.CodeMirror-gutters {
-  background-color: #1e293b;
-  color: #94a3b8;
-  border-right: 1px solid #334155;
-}
-
-.cm-string {
-  color: #f97316 !important;
-}
-
-.cm-func-call {
-  color: #3b82f6 !important;
-}
-
-.cm-keyword-custom {
-  color: #a855f7 !important;
-}
-
-.cm-comment-custom {
-  color: #ef4444 !important;
-}
-
-.cm-dotname {
-  color: #FFD700 !important;
-  font-weight: normal !important;
-}
-
-.cm-bangla-number {
-  color: #32CD32 !important;
-  font-weight: bold;
-}
-
-#output {
-  background-color: #0f172a;
-  color: #f8fafc;
-  border: 1px solid #334155;
-  border-radius: 6px;
-  padding: 15px;
-  min-height: 150px;
-  white-space: pre-wrap;
-  margin-top: 10px;
-  font-family: 'Hind Siliguri';
-  overflow-y: auto;
-}
-
+.maximized { position: absolute !important; top: 0; left: 0; right: 0; bottom: 0; height: 100% !important; z-index: 1000; }
