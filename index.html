@@ -260,7 +260,7 @@ function copyContent() {
 function downloadContent() {
     const code = editor.getValue();
     const fileName = document.getElementById('fileName').value || 'main.bcr';
-    const blob = new Blob([code], { type: "text/plain" });
+    const blob = new Blob([code], { type: "application/octet-stream" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = fileName;
