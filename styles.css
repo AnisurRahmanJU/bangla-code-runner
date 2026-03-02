@@ -235,18 +235,39 @@ body {
 
 }
 
-/* Make the topbar buttons container relative */
-.topbar .action-container {
+/* ===== Responsive Button Layout ===== */
+
+/* Desktop → পাশাপাশি থাকবে */
+.action-container {
     display: flex;
-    align-items: center;       /* vertically center items */
-    justify-content: flex-end; /* push buttons to the right */
-    gap: 10px;                 /* space between buttons */
-    position: relative;
+    gap: 10px;
+    align-items: center;
 }
 
-/* Optionally move the "কোড মুছুন" button slightly down */
-.btn-clear-code {
-    position: relative;
-    top: 3px; /* move vertically down 3px; adjust as needed */
-    align-item:right;
+/* Mobile → নিচে চলে যাবে */
+@media screen and (max-width: 992px) {
+
+    .topbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 8px 12px;
+    }
+
+    .topbar .d-flex:last-child {
+        width: 100%;
+        margin-top: 8px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .action-container .btn-ide {
+        width: 100%;
+    }
+
 }
