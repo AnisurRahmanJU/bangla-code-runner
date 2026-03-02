@@ -3,8 +3,6 @@
 ## সংস্করণ: ৪.৫ ভার্সন
 ---
 
-<img src="bncoderun.PNG" >
-
 
 > **```News```** - [**```Programming24 School```**](https://programming24.school.blog/2025/08/26/bangla-code-runner-version-4-1-released)
 
