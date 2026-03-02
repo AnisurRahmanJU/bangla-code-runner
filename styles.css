@@ -99,3 +99,144 @@ body {
 .btn-toggle { background: transparent; color: #8b949e; border: 1px solid #30363d; width: 32px; justify-content: center; }
 
 .maximized { position: absolute !important; top: 0; left: 0; right: 0; bottom: 0; height: 100% !important; z-index: 1000; }
+
+/* ===================================== */
+/* 📱 FULL ANDROID RESPONSIVE FIX      */
+/* ===================================== */
+
+@media screen and (max-width: 992px) {
+
+    /* Fix Android 100vh bug */
+    body {
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden;
+    }
+
+    .layout {
+        flex-direction: column;
+        height: calc(100dvh - 55px);
+        overflow: hidden;
+    }
+
+    /* ===== TOPBAR FIX ===== */
+
+    .topbar {
+        height: 55px;
+        padding: 0 12px;
+        flex-wrap: nowrap;
+    }
+
+    .topbar h5 {
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    .action-icons {
+        gap: 12px;
+        margin-right: 8px;
+    }
+
+    /* ===== SIDEBAR DRAWER ===== */
+
+    .sidebar {
+        position: fixed;
+        top: 55px;
+        left: -260px;
+        width: 240px;
+        height: calc(100dvh - 55px);
+        background: #111827;
+        transition: left 0.3s ease;
+        z-index: 2000;
+        overflow-y: auto;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        height: calc(100dvh - 55px);
+        background: rgba(0,0,0,0.5);
+        z-index: 1500;
+        display: none;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* ===== MAIN SECTION ===== */
+
+    .main {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #editorSection {
+        flex: 1;
+        min-height: 55%;
+    }
+
+    #consoleSection {
+        height: 40%;
+        min-height: 120px;
+    }
+
+    #resizer {
+        display: none;
+    }
+
+    /* ===== FONT OPTIMIZATION ===== */
+
+    .CodeMirror {
+        font-size: 15px !important;
+    }
+
+    .console-output {
+        font-size: 13px;
+    }
+
+    /* ===== BUTTON FIX ===== */
+
+    .btn-ide {
+        min-width: auto;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+}
+
+/* Extra Small Android Devices */
+
+@media screen and (max-width: 480px) {
+
+    .topbar h5 {
+        font-size: 13px;
+    }
+
+    .CodeMirror {
+        font-size: 14px !important;
+    }
+
+    #editorSection {
+        min-height: 60%;
+    }
+
+    #consoleSection {
+        height: 40%;
+    }
+
+}
+/* 📱 Hide Clear Code Button Only On Mobile */
+@media (max-width: 992px) {
+    .topbar .btn-danger {
+        display: none !important;
+    }
+}
