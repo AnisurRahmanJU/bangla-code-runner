@@ -1,238 +1,192 @@
-
-:root {
-    --bg-dark: #0f172a;
-    --sidebar-bg: #111827;
-    --topbar-bg: #1e293b;
-    --accent: #38bdf8;
-    --border: #334155;
-    --success: #238636;
-    --danger: #dc3545;
-}
-
+/* --- মূল স্টাইল (Desktop First) --- */
 body {
     margin: 0;
     font-family: 'Hind Siliguri', sans-serif;
-    background: var(--bg-dark);
+    background: #0f172a;
     color: white;
-    overflow: hidden; /* ডেস্কটপে বডি স্ক্রল হবে না */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-/* --- Topbar Styling --- */
 .topbar {
-    height: 60px;
-    background: var(--topbar-bg);
+    height: 55px;
+    background: #1e293b;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--border);
+    padding: 0 15px;
+    border-bottom: 1px solid #334155;
     z-index: 1001;
     flex-shrink: 0;
 }
 
-.topbar .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap; /* লোগো ও টেক্সট এক লাইনে রাখবে */
-}
-
-.action-icons { 
-    display: flex; 
-    gap: 15px; 
-    margin-right: 15px; 
-}
-
+.action-icons { display: flex; gap: 15px; margin-right: 10px; }
 .action-icons i {
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #94a3b8;
     transition: 0.2s;
+    padding: 5px;
 }
-.action-icons i:hover { color: var(--accent); }
+.action-icons i:hover { color: #38bdf8; transform: scale(1.1); }
 
-/* --- Layout --- */
 .layout { 
     display: flex; 
     flex: 1; 
     overflow: hidden; 
+    position: relative; 
 }
 
-/* Sidebar */
+/* Sidebar Styling */
 .sidebar {
     width: 240px;
-    background: var(--sidebar-bg);
+    background: #111827;
     border-right: 1px solid #1f2937;
     padding: 20px 15px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
-    transition: 0.3s;
 }
 
-.sidebar-title { color: #64748b; font-size: 11px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+.sidebar-title { color: #64748b; font-size: 12px; margin-bottom: 15px; text-transform: uppercase; }
 
 .file-upload-box {
     background: #1e293b;
-    border: 1px dashed var(--border);
+    border: 1px dashed #334155;
     color: #94a3b8;
     padding: 12px;
     text-align: center;
     border-radius: 6px;
     cursor: pointer;
     font-size: 13px;
-    margin-top: auto; /* ফুটারে রাখবে */
+    transition: 0.3s;
+    margin-top: auto; /* Push to bottom */
 }
+.file-upload-box:hover { border-color: #38bdf8; color: #38bdf8; background: #0f172a; }
 
 .filename-input {
     background: #1e293b;
-    border: 1px solid var(--border);
-    color: var(--accent);
+    border: 1px solid #334155;
+    color: #38bdf8;
     border-radius: 4px;
-    padding: 8px;
+    padding: 6px 12px;
     width: 100%;
+    outline: none;
     font-size: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Main Area */
+.github-link { color: #94a3b8; font-size: 13px; cursor: pointer; margin-top: 10px; margin-bottom: 20px; }
+
+/* Editor & Console */
 .main { 
     flex: 1; 
     display: flex; 
     flex-direction: column; 
-    background: #1e293b; 
-    position: relative;
-    min-width: 0; /* Flexbox overflow fix */
-}
-
-#editorSection { 
-    flex: 1; 
+    background: #272822; 
     position: relative; 
+    overflow: hidden;
 }
+#editorSection { flex: 1; position: relative; overflow: hidden; }
 
 .CodeMirror { 
     height: 100% !important; 
-    font-size: 17px; 
+    font-family: 'Hind Siliguri', 'Consolas', monospace !important; 
+    font-size: 16px; 
     background: #1e293b !important; 
 }
 
 /* Color Highlighting */
 .cm-bangla-number { color: #32CD32 !important; font-weight: bold; }
+.cm-dotname { color: #FFD700 !important; }
 .cm-keyword-custom { color: #c678dd !important; font-weight: bold; }
 .cm-comment-custom { color: #ff3344 !important; }
 .cm-func-call { color: #61afef !important; }
 .cm-string { color: #e06c75 !important; }
 
-/* Resizer & Console */
-#resizer { 
-    height: 6px; 
-    background: #0f172a; 
-    cursor: ns-resize; 
-    border-top: 1px solid var(--border);
-}
+#resizer { height: 6px; background: #1e293b; cursor: ns-resize; z-index: 100; border-top: 1px solid #334155; }
+#consoleSection { height: 180px; background: #010409; display: flex; flex-direction: column; min-height: 40px; }
+.console-header { padding: 8px 15px; background: #161b22; display: flex; justify-content: space-between; align-items: center; }
+.console-output { flex: 1; padding: 12px; overflow: auto; color: #e6edf3; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 13px; line-height: 1.5; }
 
-#consoleSection { 
-    height: 200px; 
-    background: #010409; 
-    display: flex; 
-    flex-direction: column; 
-}
-
-.console-header { 
-    padding: 10px 15px; 
-    background: #161b22; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    border-bottom: 1px solid #30363d;
-}
-
-.console-output { 
-    flex: 1; 
-    padding: 15px; 
-    overflow-y: auto; 
-    color: #e6edf3; 
-    font-family: 'Consolas', monospace; 
-    font-size: 14px; 
-}
-
-/* Button Styling (Consistent Size) */
+/* Buttons */
 .btn-ide { 
     height: 38px; 
-    min-width: 110px; 
+    min-width: 100px; 
     padding: 0 15px; 
     border-radius: 6px; 
     font-size: 13px; 
     border: none; 
     cursor: pointer; 
-    font-weight: 600;
+    font-weight: 600; 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    transition: 0.2s;
+    gap: 5px;
 }
-
-.btn-run { background: var(--success); color: white; }
-.btn-danger { background: var(--danger); color: white; }
+.btn-run { background: #238636; color: white; }
+.btn-run:hover { background: #2ea043; }
+.btn-danger { background: #dc3545; color: white; }
+.btn-danger:hover { background: #bb2d3b; }
 .btn-reload { background: #0366d6; color: white; }
 .btn-toggle { background: transparent; color: #8b949e; border: 1px solid #30363d; min-width: 40px; width: 40px; }
 
-/* Maximize Logic */
-.maximized { 
-    position: fixed !important; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    height: 100vh !important; 
-    z-index: 2000; 
+.maximized { position: absolute !important; top: 0; left: 0; right: 0; bottom: 0; height: 100% !important; z-index: 1000; }
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* ট্যাবলেট এবং ছোট ল্যাপটপ (Max 992px) */
+@media (max-width: 992px) {
+    .sidebar { width: 200px; }
+    .btn-ide { min-width: 90px; padding: 0 10px; }
 }
 
-/* --- Responsive (Mobile) --- */
-
+/* মোবাইল ডিভাইস (Max 768px) */
 @media (max-width: 768px) {
-    body { overflow: hidden; } /* মোবাইল স্ক্রিন যেন স্ক্রল না হয় */
+    body { overflow-y: auto; height: auto; }
+    
+    .topbar { 
+        padding: 0 10px; 
+        flex-direction: column; 
+        height: auto; 
+        padding-bottom: 10px; 
+    }
+    
+    .topbar h5 { font-size: 16px; margin: 10px 0; }
 
-    .topbar {
-        padding: 0 10px;
+    .layout { 
+        flex-direction: column; 
+        height: auto; 
+        overflow: visible; 
+    }
+
+    .sidebar { 
+        width: 100%; 
+        border-right: none; 
+        border-bottom: 1px solid #1f2937; 
         height: auto;
-        min-height: 60px;
-        flex-wrap: nowrap; /* লোগো ও বাটন এক লাইনে রাখবে */
+        padding: 15px;
     }
 
-    .topbar .brand h5 { font-size: 14px; }
-    .topbar .brand img { width: 22px; }
+    .main { height: 80vh; } /* মোবাইলে এডিটর হাইট */
 
-    .action-icons { display: none; } /* মোবাইলে আইকন হাইড (বাটন এর জায়গা বাড়াতে) */
+    .file-upload-box { margin-top: 15px; }
 
-    .layout { flex-direction: column; }
-
-    .sidebar {
-        display: none; /* মোবাইলে জায়গা বাঁচাতে সাইডবার হাইড করুন */
+    .action-container {
+        width: 100%;
+        justify-content: center;
     }
 
-    /* মোবাইলে বাটন গুলো ছোট করা */
-    .btn-ide {
-        min-width: 80px;
-        height: 34px;
-        font-size: 11px;
-        padding: 0 8px;
-    }
-
-    .main {
-        height: calc(100vh - 60px); /* ফুল স্ক্রিন এডিটর */
-    }
-
-    #consoleSection {
-        height: 150px; /* কনসোল ছোট রাখা */
-    }
+    .btn-ide { flex: 1; height: 45px; font-size: 14px; }
+    
+    #consoleSection { height: 250px; }
 }
 
+/* অতি ক্ষুদ্র মোবাইল (Max 480px) */
 @media (max-width: 480px) {
-    .btn-ide {
-        min-width: 70px;
-        gap: 3px;
-    }
-    .btn-ide span { display: none; } /* খুব ছোট মোবাইলে শুধু আইকন দেখাবে */
+    .topbar .d-flex { width: 100%; justify-content: space-between; }
+    .action-icons { gap: 10px; }
+    .CodeMirror { font-size: 14px; }
 }
