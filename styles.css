@@ -83,7 +83,7 @@ body {
 /* Color Highlighting */
 .cm-bangla-number { color: limegreen !important; font-weight: bold; }
 .cm-dotname { color: orange !important; }
-.cm-keyword-custom { color: purple !important; font-weight: bold; }
+.cm-keyword-custom { color: orchid !important; font-weight: bold; }
 .cm-comment-custom { color: #ff3344 !important; }
 .cm-func-call { color: SkyBlue !important; }
 .cm-string { color: white !important; }
