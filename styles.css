@@ -235,14 +235,14 @@ body {
 
 }
 
-/* Desktop: visible by default */
-.btn-delete {
-    display: inline-block; /* or flex, whatever fits your layout */
+/* Default: Desktop - show button */
+.btn-clear-code {
+    display: inline-flex; /* or inline-block/flex depending on your layout */
 }
 
-/* Mobile: hide on screens <= 992px */
+/* Mobile: Hide button on screens <= 992px */
 @media screen and (max-width: 992px) {
-    .btn-delete {
-        display: none;
+    .btn-clear-code {
+        display: none !important;
     }
 }
