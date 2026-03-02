@@ -234,3 +234,15 @@ body {
     }
 
 }
+
+/* Desktop: visible by default */
+.btn-delete {
+    display: inline-block; /* or flex, whatever fits your layout */
+}
+
+/* Mobile: hide on screens <= 992px */
+@media screen and (max-width: 992px) {
+    .btn-delete {
+        display: none;
+    }
+}
