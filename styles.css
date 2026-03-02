@@ -234,9 +234,3 @@ body {
     }
 
 }
-/* 📱 Hide Clear Code Button Only On Mobile */
-@media (max-width: 992px) {
-    .topbar .btn-danger {
-        display: none !important;
-    }
-}
