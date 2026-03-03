@@ -94,7 +94,7 @@ body {
 .console-output { flex: 1; padding: 15px; overflow: auto; color: #e6edf3; font-family: 'Consolas', monospace; white-space: pre-wrap; font-size: 14px; }
 
 .btn-ide { height: 32px; padding: 0 12px; border-radius: 4px; font-size: 12px; border: none; cursor: pointer; font-weight: 600; }
-.btn-run { background: #238636; color: white; height: 20px; }
+.btn-run { background: #238636; color: white; height: 36px; }
 .btn-danger { background: #dc3545; color: white; }
 .btn-toggle { background: transparent; color: #8b949e; border: 1px solid #30363d; width: 32px; justify-content: center; }
 
