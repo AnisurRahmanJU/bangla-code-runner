@@ -185,11 +185,9 @@ body {
     }
 
     #consoleSection {
-    resize: vertical;       /* vertical resize অনুমতি দেয় */
-    overflow: auto;         /* scrollable যদি কন্টেন্ট বড় হয় */
-    min-height: 120px;       /* minimum height */
-    max-height: 40%;        /* maximum height */
-   }
+        height: 40%;
+        min-height: 120px;
+    }
 
     #resizer {
         display: none;
@@ -201,6 +199,9 @@ body {
         font-size: 15px !important;
     }
 
+    .console-output {
+        font-size: 13px;
+    }
 
     /* ===== BUTTON FIX ===== */
 
@@ -228,10 +229,14 @@ body {
         min-height: 60%;
     }
 
+    #consoleSection {
+        height: 40%;
+    }
 
 }
+
 /* Pattern container styling */
-.console-output {
+.console-output{
   white-space: pre-wrap;   /* preserves all spaces and line breaks */
   font-family: 'Hind Siliguri', sans-serif; /* keep your font */
   font-size: 18px;         /* adjust size as needed */
@@ -242,4 +247,3 @@ body {
   display: inline-block;   /* shrink-wrap container to content */
   user-select: text;       /* allow copy-paste */
 }
-
