@@ -199,9 +199,6 @@ body {
         font-size: 15px !important;
     }
 
-    .console-output {
-        font-size: 13px;
-    }
 
     /* ===== BUTTON FIX ===== */
 
@@ -229,9 +226,12 @@ body {
         min-height: 60%;
     }
 
-    #consoleSection {
-        height: 40%;
-    }
+  #consoleSection {
+    resize: vertical;       /* vertical resize অনুমতি দেয় */
+    overflow: auto;         /* scrollable যদি কন্টেন্ট বড় হয় */
+    min-height: 80px;       /* minimum height */
+    max-height: 80%;        /* maximum height */
+}
 
 }
 /* Pattern container styling */
