@@ -285,3 +285,22 @@ document.getElementById('maxToggleBtn').onclick = function() {
 
 </body>
 </html>
+
+
+<script>
+    function convertBoolToBangla(val) {
+    if (val === true) return 'সত্য';
+    if (val === false) return 'মিথ্যা';
+    return val;
+}
+
+(function() {
+    const outputDiv = document.getElementById('output');
+    console.log = function(...args) {
+        args.forEach(arg => {
+            outputDiv.innerHTML += `<span>${toBN(convertBoolToBangla(arg))}</span>\n`;
+        });
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    };
+})();
+</script>
