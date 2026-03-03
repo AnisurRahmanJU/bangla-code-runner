@@ -169,8 +169,28 @@
                     <button class="btn-ide btn-reload" onclick="location.reload()">↺ রিলোড</button>
                     <button class="btn-ide btn-danger" onclick="clearOutput()">🗑 মুছুন</button>
                     <button id="maxToggleBtn" class="btn-ide btn-toggle">
-                        <i class="fa-solid fa-chevron-up"></i>
+                    <i class="fa-solid fa-chevron-up"></i>
                     </button>
+
+<script>
+const btn = document.getElementById('maxToggleBtn');
+const icon = btn.querySelector('i');
+
+btn.addEventListener('click', () => {
+    // Toggle the icon classes
+    if (icon.classList.contains('fa-chevron-up')) {
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        // Optional: Add maximize logic here
+        console.log('Maximized view');
+    } else {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        // Optional: Add minimize logic here
+        console.log('Minimized view');
+    }
+});
+</script>
                 </div>
             </div>
             <div class="console-output" id="output"></div>
