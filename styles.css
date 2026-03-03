@@ -239,7 +239,7 @@ body {
 .console-output{
   white-space: pre-wrap;   /* preserves all spaces and line breaks */
   font-family: 'Hind Siliguri', sans-serif; /* keep your font */
-  font-size: 18px;         /* adjust size as needed */
+  font-size: 14px;         /* adjust size as needed */
   line-height: 1.4;        /* comfortable line spacing */
   background-color: #000000; /* optional black background behind pattern */
   padding: 10px;
