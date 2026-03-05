@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Documentation</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+max-width:900px;
+margin:auto;
+padding:20px;
+background:#0d1117;
+color:white;
+}
+
+pre{
+position:relative;
+background:#161b22;
+padding:15px;
+border-radius:6px;
+overflow:auto;
+margin-bottom:30px;
+}
+
+.copy-btn{
+position:absolute;
+top:5px;
+right:5px;
+background:#238636;
+border:none;
+color:white;
+padding:5px 10px;
+cursor:pointer;
+border-radius:4px;
+}
+
+.md-topic{
+margin-top:40px;
+border-bottom:1px solid #444;
+padding-bottom:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Documentation</h1>
+<div id="content"></div>
+
+<script>
+const user="AnisurRahmanJU";
+const repo="bangla-code-runner";
+const folder="docs";
+
+async function loadDocs(){
+
+    // GitHub API call to list folder contents
+    let res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
+    let files = await res.json();
+
+    const contentDiv = document.getElementById("content");
+
+    for(let file of files){
+        if(file.type==="file" && file.name.endsWith(".md")){
+            
+            // topic title
+            let topic = document.createElement("h2");
+            topic.className = "md-topic";
+            topic.textContent = file.name.replace(".md","");
+            contentDiv.appendChild(topic);
+
+            // fetch markdown content
+            let mdRes = await fetch(file.download_url);
+            let mdText = await mdRes.text();
+
+            // convert to HTML
+            let html = marked.parse(mdText);
+
+            let div = document.createElement("div");
+            div.innerHTML = html;
+            contentDiv.appendChild(div);
+        }
+    }
+
+    setTimeout(addCopyButtons,300);
+}
+
+function addCopyButtons(){
+    document.querySelectorAll("pre code").forEach(block=>{
+        hljs.highlightElement(block);
+
+        let btn=document.createElement("button");
+        btn.textContent="Copy";
+        btn.className="copy-btn";
+
+        btn.onclick=()=>{
+            navigator.clipboard.writeText(block.innerText);
+            btn.textContent="Copied!";
+            setTimeout(()=>btn.textContent="Copy",1000);
+        };
+
+        block.parentElement.appendChild(btn);
+    });
+}
+
+loadDocs();
+</script>
+
+</body>
+</html>
