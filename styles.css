@@ -247,3 +247,45 @@ body {
   display: inline-block;   /* shrink-wrap container to content */
   user-select: text;       /* allow copy-paste */
 }
+
+/* ========================= */
+/* 🔻 FOOTER DESIGN */
+/* ========================= */
+
+.app-footer {
+    height: 40px;
+    background: #020617;
+    border-top: 1px solid #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #94a3b8;
+    position: relative;
+    z-index: 1000;
+}
+
+.footer-content {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-content .brand {
+    color: #38bdf8;
+    font-weight: 600;
+}
+
+.footer-content .divider {
+    color: #334155;
+}
+
+/* Hover effect (optional pro touch) */
+.app-footer:hover {
+    background: #020617;
+    color: #cbd5f5;
+    transition: 0.3s;
+}
