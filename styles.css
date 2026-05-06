@@ -46,7 +46,7 @@ body {
     background: #1e293b;
     border: 1px dashed #334155;
     color: #94a3b8;
-    padding: 5px;
+    padding: 15px;
     text-align: center;
     border-radius: 6px;
     cursor: pointer;
@@ -56,6 +56,7 @@ body {
 .file-upload-box:hover { border-color: #38bdf8; color: #38bdf8; background: #0f172a; }
 
 .filename-input {
+    border: 1px dashed #334155;
     background: #1e293b;
     border: 1px solid #334155;
     color: #38bdf8;
