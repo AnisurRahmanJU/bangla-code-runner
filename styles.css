@@ -65,6 +65,7 @@ body {
     font-size: 13px;
     transition: 0.3s;
 }
+.filename-input:hover { border-color: #38bdf8; color: #38bdf8; background: #0f172a; }
 
 .github-link { color: #94a3b8; font-size: 13px; cursor: pointer; margin-top: 20px; }
 
