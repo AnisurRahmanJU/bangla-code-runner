@@ -56,15 +56,14 @@ body {
 .file-upload-box:hover { border-color: #38bdf8; color: #38bdf8; background: #0f172a; }
 
 .filename-input {
+   background: #1e293b;
     border: 1px dashed #334155;
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #38bdf8;
-    border-radius: 4px;
-    padding: 6px 12px;
-    width: 100%;
-    outline: none;
-    font-size: 13px; 
+    color: #94a3b8;
+    padding: 15px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: 0.3s;
 }
 
 .github-link { color: #94a3b8; font-size: 13px; cursor: pointer; margin-top: 20px; }
