@@ -14,10 +14,16 @@
 
     <style>
         .sidebar {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+    width: 240px;
+    background: #111827;
+    border-right: 1px solid #1f2937;
+    padding: 20px 15px;
+    flex-shrink: 0;
+
+    overflow-y: auto;     /* 🔥 SCROLL ENABLE */
+    height: 100%;         /* ensure full height */
+    padding-bottom: 60px; /* 🔥 footer overlap fix */
+}
 
         .file-upload-box {
             margin-top: auto;
